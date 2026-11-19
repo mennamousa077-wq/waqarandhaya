@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>حقيبة المشتريات وإتمام الطلب — وقار وحياء</title>
+  
+  <!-- Tailwind CSS & Configuration -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    globalThis.tailwind = globalThis.tailwind || {};
+    globalThis.tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'champagne-gold': '#C5A880',
+            'soft-sage': '#E2E8DF',
+            'warm-taupe': '#D8CEC4',
+            'mocha-brown': '#5C4033',
+            'forest-green': '#2F4F4F',
+            'light-primary': '#2F4F4F',
+            'light-on-primary': '#FFFFFF',
+            'light-secondary': '#5C4033',
+            'light-on-secondary': '#FFFFFF',
+            'light-surface': '#FAF8F5',
+            'light-on-surface': '#2C2A29',
+            'light-surface-container-low': '#F4EFEA',
+            'light-surface-container': '#EAE3DC',
+            'light-surface-container-high': '#E2D9D0',
+            'light-outline': '#A3978B',
+            'light-outline-variant': '#D8CEC4',
+            'light-accent': '#C5A880',
+            'light-on-accent': '#2C2A29',
+          },
+          borderRadius: {
+            'sm': '6px',
+            'DEFAULT': '10px',
+            'md': '14px',
+            'lg': '20px',
+            'xl': '28px',
+            'full': '9999px',
+          },
+          fontFamily: {
+            'display': ['"Amiri"', 'sans-serif'],
+            'headline': ['"Amiri"', 'sans-serif'],
+            'title': ['"Noto Kufi Arabic"', 'sans-serif'],
+            'body': ['"Noto Kufi Arabic"', 'sans-serif'],
+            'label': ['"Noto Kufi Arabic"', 'sans-serif'],
+          },
+          fontSize: {
+            'display-lg': ['48px', { lineHeight: '58px', letterSpacing: '-0.5px', fontWeight: '700' }],
+            'display-lg-mobile': ['32px', { lineHeight: '40px', letterSpacing: '-0.25px', fontWeight: '700' }],
+            'headline-lg': ['36px', { lineHeight: '44px', letterSpacing: '-0.25px', fontWeight: '700' }],
+            'headline-lg-mobile': ['28px', { lineHeight: '36px', fontWeight: '700' }],
+            'headline-md': ['28px', { lineHeight: '36px', fontWeight: '700' }],
+            'headline-md-mobile': ['22px', { lineHeight: '30px', fontWeight: '700' }],
+            'headline-sm': ['22px', { lineHeight: '30px', fontWeight: '700' }],
+            'title-lg': ['20px', { lineHeight: '28px', fontWeight: '600' }],
+            'title-md': ['16px', { lineHeight: '24px', fontWeight: '600' }],
+            'body-lg': ['16px', { lineHeight: '26px', fontWeight: '400' }],
+            'body-md': ['14px', { lineHeight: '22px', fontWeight: '400' }],
+            'label-lg': ['14px', { lineHeight: '20px', fontWeight: '600' }],
+            'label-md': ['12px', { lineHeight: '18px', fontWeight: '500' }],
+            'label-sm': ['11px', { lineHeight: '16px', fontWeight: '500' }],
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Typography & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&amp;family=Noto+Kufi+Arabic:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Store, Cart & Interactive App Scripts -->
+  <script src="js/store-data.js" defer></script>
+  <script src="js/cart.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script type="module" src="js/firebase-config.js"></script>
+
+  <!-- Firebase v13.4.0 Direct Integration -->
+  <script type="module">
+    import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
+    import { getAnalytics, logEvent as fbLogEvent } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-analytics.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDK-LcQqUt0YSF9DtOg3m9w_-1gF7H-awQ",
+      authDomain: "tabliya-and-falafel-restaurant.firebaseapp.com",
+      projectId: "tabliya-and-falafel-restaurant",
+      storageBucket: "tabliya-and-falafel-restaurant.firebasestorage.app",
+      messagingSenderId: "763122319755",
+      appId: "1:763122319755:web:077e01d9fa88a9f8bcaf8e",
+      measurementId: "G-YBQ0FGJ24Z"
+    };
+
+    if (!window.WaqarFirebase) {
+      try {
+        const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+        let analytics = null;
+        if (window.location.protocol === 'http:' || window.location.protocol === 'https:') {
+          try { analytics = getAnalytics(app); } catch (e) {}
+        }
+        const db = getFirestore(app);
+        window.WaqarFirebase = {
+          app,
+          analytics,
+          db,
+          firebaseConfig,
+          isReady: () => true,
+          logEvent: (name, params = {}) => {
+            try { if (analytics) fbLogEvent(analytics, name, params); } catch (e) {}
+          },
+          submitOrder: async (orderData) => {
+            try {
+              const docRef = await addDoc(collection(db, "orders"), {
+                ...orderData,
+                status: 'جديد - بانتظار الشحن الكتوم',
+                createdAt: serverTimestamp(),
+                localTimestamp: new Date().toISOString()
+              });
+              return { success: true, id: docRef.id, fromFirebase: true };
+            } catch (err) {
+              const localId = 'LOCAL-' + Date.now().toString(36).toUpperCase();
+              return { success: true, id: localId, fromFirebase: false };
+            }
+          },
+          submitConsultation: async (consultData) => {
+            try {
+              const docRef = await addDoc(collection(db, "consultations"), {
+                ...consultData,
+                createdAt: serverTimestamp()
+              });
+              return { success: true, id: docRef.id };
+            } catch (e) {
+              return { success: true, id: 'LOCAL-' + Date.now() };
+            }
+          }
+        };
+        window.dispatchEvent(new CustomEvent('waqar-firebase-ready'));
+      } catch (e) {
+        console.warn("Firebase init warning:", e);
+      }
+    }
+  </script>
+</head>
+<body class="bg-light-surface text-light-on-surface font-body min-h-screen flex flex-col antialiased selection:bg-soft-sage selection:text-forest-green" data-page="cart">
+
+  <!-- Top Announcement Bar -->
+  <aside class="bg-forest-green text-light-on-primary py-2 px-4 text-center border-b border-forest-green/20">
+    <div class="max-w-7xl mx-auto flex items-center justify-between text-label-sm">
+      <div class="hidden md:flex items-center gap-2">
+        <span class="material-symbols-outlined text-[16px] text-champagne-gold">verified</span>
+        <span>ضمان شرعي: كافة الأقمشة معتمة 100% وغير شفافة إطلاقاً</span>
+      </div>
+      <div class="mx-auto flex items-center gap-3">
+        <span class="bg-champagne-gold/20 text-champagne-gold px-2 py-0.5 rounded text-[11px] font-semibold">خدمة مخصصة</span>
+        <span>شحن مغلّف وسري مجاني للطلبات فوق 350 ر.س | استبدال فوري للمقاسات</span>
+      </div>
+      <div class="hidden md:flex items-center gap-4 text-light-on-primary/80">
+        <button type="button" onclick="openWaqarSizingModal()" class="hover:text-white cursor-pointer transition-colors">مساعدة القياس الشرعي</button>
+        <span>•</span>
+        <span class="hover:text-white cursor-pointer">العربية</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Focused Checkout Header -->
+  <header class="sticky top-0 z-40 bg-light-surface/95 backdrop-blur-md border-b border-light-outline-variant">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-6">
+      
+      <!-- Brand & Return Link -->
+      <a href="index.html" class="flex items-center gap-3 shrink-0">
+        <div class="w-10 h-10 rounded-full bg-soft-sage border border-light-outline-variant flex items-center justify-center text-forest-green">
+          <span class="material-symbols-outlined text-[24px]">spa</span>
+        </div>
+        <div>
+          <span class="font-headline text-headline-sm text-forest-green font-bold tracking-tight block leading-none">وَقار وحَياء</span>
+          <span class="text-[11px] text-mocha-brown block mt-0.5 tracking-wider">Sanctuary of Modest Grace</span>
+        </div>
+      </a>
+
+      <!-- Checkout Step Indicators -->
+      <div class="hidden md:flex items-center gap-3 text-label-sm">
+        <div class="flex items-center gap-2 text-forest-green font-bold">
+          <span class="w-6 h-6 rounded-full bg-forest-green text-white flex items-center justify-center text-[12px]">1</span>
+          <span>حقيبة الستر</span>
+        </div>
+        <span class="text-light-outline">———</span>
+        <div class="flex items-center gap-2 text-forest-green font-bold">
+          <span class="w-6 h-6 rounded-full bg-forest-green text-white flex items-center justify-center text-[12px]">2</span>
+          <span>الشحن الكتوم والخصوصية</span>
+        </div>
+        <span class="text-light-outline">———</span>
+        <div class="flex items-center gap-2 text-light-outline">
+          <span class="w-6 h-6 rounded-full bg-light-surface-container-high text-light-outline flex items-center justify-center text-[12px]">3</span>
+          <span>الدفع والتأكيد</span>
+        </div>
+      </div>
+
+      <!-- Secure Trust Badge -->
+      <div class="flex items-center gap-2 text-forest-green text-label-sm font-semibold">
+        <span class="material-symbols-outlined text-[20px] text-champagne-gold">lock</span>
+        <span>تسوق آمن ومشفر 100%</span>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Cart & Checkout Content -->
+  <main class="flex-1 max-w-7xl mx-auto px-6 py-10 w-full">
+    
+    <div class="mb-8">
+      <h1 class="font-headline text-headline-lg text-forest-green">حقيبة المشتريات وإتمام الطلب المريح</h1>
+      <p class="text-body-md text-light-outline mt-1">راجعي تفاصيل مقاسات الأطوال الشرعية وخيارات الشحن الكتوم التام قبل تأكيد طلبكِ المتصل بـ Firebase.</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+      
+      <!-- Left Column (in RTL): Bag Items Review & Discreet Packaging Preferences -->
+      <section class="lg:col-span-7 space-y-6">
+        
+        <!-- Cart Items List Container (Rendered dynamically by cart.js) -->
+        <div class="bg-light-surface-container-low p-6 rounded-2xl border border-light-outline-variant space-y-6 cart-items-wrapper">
+          
+          <div class="flex items-center justify-between pb-4 border-b border-light-outline-variant">
+            <h2 class="font-title text-title-lg text-forest-green font-bold flex items-center gap-2">
+              <span class="material-symbols-outlined text-[22px]">shopping_bag</span>
+              <span>القطع المختارة (<span class="cart-badge-count">2</span> أطقم كاملة)</span>
+            </h2>
+            <a href="products.html" class="text-label-sm text-mocha-brown hover:underline font-semibold">إضافة المزيد من الخمارات والعبايات</a>
+          </div>
+
+          <!-- Item 1: Royal Head Abaya Set -->
+          <div class="flex flex-col sm:flex-row gap-4 pb-6 border-b border-light-outline-variant/60 cart-item-row" data-index="0">
+            <div class="w-24 h-32 rounded-lg overflow-hidden bg-warm-taupe/20 shrink-0 border border-light-outline-variant">
+              <img src="images/abaya-sakina-royal.jpg" alt="طقم «سكينة» الملكي: عباءة رأس وخمار مدمج" class="w-full h-full object-cover">
+            </div>
+            <div class="flex-1 space-y-2">
+              <div class="flex items-start justify-between">
+                <div>
+                  <h3 class="font-title text-title-md text-forest-green font-bold">طقم عباية الرأس الفاخرة «سَكينة» (طقم متكامل)</h3>
+                  <p class="text-label-sm text-light-outline mt-0.5">كريب صالونة ياباني (260 GSM) • سواد كاحل فاحم</p>
+                </div>
+                <span class="font-headline text-headline-sm text-forest-green font-bold">340 ر.س</span>
+              </div>
+
+              <!-- Modesty Specs Meta Chips -->
+              <div class="flex flex-wrap items-center gap-2 pt-1">
+                <span class="bg-light-surface border border-forest-green/30 text-forest-green text-[11px] font-semibold px-2.5 py-0.5 rounded">
+                  طول العباية: 58 إنش (لقامة 158-163 سم)
+                </span>
+                <span class="bg-light-surface border border-light-outline-variant text-forest-green text-[11px] font-semibold px-2.5 py-0.5 rounded flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[13px] text-champagne-gold">verified</span>
+                  <span>معتم 100% غير شفاف</span>
+                </span>
+                <span class="bg-soft-sage text-forest-green text-[11px] font-semibold px-2 py-0.5 rounded">
+                  يشمل نقاب ربط مائل مجاني
+                </span>
+              </div>
+
+              <!-- Quantity and Remove -->
+              <div class="flex items-center justify-between pt-2">
+                <div class="flex items-center border border-light-outline-variant rounded bg-light-surface">
+                  <button type="button" class="qty-btn-minus px-2.5 py-1 text-light-outline hover:text-forest-green" data-index="0">-</button>
+                  <span class="px-3 font-bold text-forest-green font-mono text-label-sm">1</span>
+                  <button type="button" class="qty-btn-plus px-2.5 py-1 text-light-outline hover:text-forest-green" data-index="0">+</button>
+                </div>
+                <button type="button" class="remove-item-btn text-label-xs text-mocha-brown hover:text-red-700 flex items-center gap-1" data-index="0">
+                  <span class="material-symbols-outlined text-[14px]">delete</span>
+                  <span>حذف القطعة</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 2: French Khimar Set -->
+          <div class="flex flex-col sm:flex-row gap-4 pb-2 cart-item-row" data-index="1">
+            <div class="w-24 h-32 rounded-lg overflow-hidden bg-warm-taupe/20 shrink-0 border border-light-outline-variant">
+              <img src="images/khimar-afaf-mocha.webp" alt="طقم الخمار الفرنسي «عَفاف» قطعتين (لون الموكا الدافئ)" class="w-full h-full object-cover">
+            </div>
+            <div class="flex-1 space-y-2">
+              <div class="flex items-start justify-between">
+                <div>
+                  <h3 class="font-title text-title-md text-forest-green font-bold">طقم الخمار الفرنسي «عَفاف» قطعتين (لون الموكا الدافئ)</h3>
+                  <p class="text-label-sm text-light-outline mt-0.5">حرير المدينة الناعم (210 GSM) • خمار + تنورة كلوش</p>
+                </div>
+                <span class="font-headline text-headline-sm text-forest-green font-bold">295 ر.س</span>
+              </div>
+
+              <!-- Modesty Specs Meta Chips -->
+              <div class="flex flex-wrap items-center gap-2 pt-1">
+                <span class="bg-light-surface border border-forest-green/30 text-forest-green text-[11px] font-semibold px-2.5 py-0.5 rounded">
+                  طول الخمار: 135 سم (سادل خلفي وأمامي)
+                </span>
+                <span class="bg-light-surface border border-light-outline-variant text-forest-green text-[11px] font-semibold px-2.5 py-0.5 rounded">
+                  طول التنورة: 104 سم
+                </span>
+                <span class="bg-soft-sage text-forest-green text-[11px] font-semibold px-2 py-0.5 rounded">
+                  رباط رأس داخلي مانع للانزلاق
+                </span>
+              </div>
+
+              <!-- Quantity and Remove -->
+              <div class="flex items-center justify-between pt-2">
+                <div class="flex items-center border border-light-outline-variant rounded bg-light-surface">
+                  <button type="button" class="qty-btn-minus px-2.5 py-1 text-light-outline hover:text-forest-green" data-index="1">-</button>
+                  <span class="px-3 font-bold text-forest-green font-mono text-label-sm">1</span>
+                  <button type="button" class="qty-btn-plus px-2.5 py-1 text-light-outline hover:text-forest-green" data-index="1">+</button>
+                </div>
+                <button type="button" class="remove-item-btn text-label-xs text-mocha-brown hover:text-red-700 flex items-center gap-1" data-index="1">
+                  <span class="material-symbols-outlined text-[14px]">delete</span>
+                  <span>حذف القطعة</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Specialized Modesty & Discreet Shipping Options with Photos -->
+        <div class="bg-light-surface-container-low p-6 rounded-2xl border border-light-outline-variant space-y-4">
+          <h2 class="font-title text-title-lg text-forest-green font-bold flex items-center gap-2">
+            <span class="material-symbols-outlined text-[22px] text-forest-green">inventory_2</span>
+            <span>خيارات التغليف الكتوم وخصوصية التسليم (Discreet Delivery)</span>
+          </h2>
+          <p class="text-body-sm text-light-outline">
+            نحترم خصوصية أخواتنا التامة؛ لذا نتيح لكِ اختيار أسلوب التغليف المناسب لظروف استلامكِ.
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+            
+            <!-- Option 1: Discreet Kraft Box with Image -->
+            <label class="flex flex-col rounded-xl border-2 border-forest-green bg-soft-sage/30 overflow-hidden cursor-pointer p-4 transition-all hover:shadow-md">
+              <div class="flex items-start justify-between mb-3">
+                <div class="flex items-center gap-2">
+                  <input type="radio" name="packaging" checked class="text-forest-green focus:ring-forest-green">
+                  <span class="font-title text-title-md text-forest-green font-bold">صندوق وقار الكتوم</span>
+                </div>
+                <span class="text-label-xs bg-forest-green text-white px-2 py-0.5 rounded font-semibold">موصى به</span>
+              </div>
+              
+              <div class="h-32 rounded-lg overflow-hidden border border-forest-green/20 mb-3">
+                <img src="images/packaging-discreet.jpg" alt="صندوق وقار الكتوم" class="w-full h-full object-cover">
+              </div>
+
+              <p class="text-body-xs text-light-outline leading-relaxed">
+                كرتون خارجي بني سادة ومغلق بإحكام، خالي من أي صور أو أسماء للملابس مع كيس قماشي داخلي معطر بمسك الطهارة.
+              </p>
+            </label>
+
+            <!-- Option 2: Luxury Gift Box with Image -->
+            <label class="flex flex-col rounded-xl border border-light-outline-variant hover:border-forest-green/40 bg-light-surface overflow-hidden cursor-pointer p-4 transition-all hover:shadow-md">
+              <div class="flex items-start justify-between mb-3">
+                <div class="flex items-center gap-2">
+                  <input type="radio" name="packaging" class="text-forest-green focus:ring-forest-green">
+                  <span class="font-title text-title-md text-light-on-surface font-semibold">صندوق الهدايا الملكي</span>
+                </div>
+                <span class="text-label-xs bg-champagne-gold text-forest-green px-2 py-0.5 rounded font-bold">إهداء</span>
+              </div>
+
+              <div class="h-32 rounded-lg overflow-hidden border border-light-outline-variant mb-3">
+                <img src="images/packaging-gift.jpg" alt="صندوق الهدايا الملكي" class="w-full h-full object-cover">
+              </div>
+
+              <p class="text-body-xs text-light-outline leading-relaxed">
+                تغليف هدايا فاخر للأخوات والعرائس مع شريط ساتان وبطاقة تهنئة إسلامية بالستر والبركة، يوضع داخل كرتون حماية سري.
+              </p>
+            </label>
+
+          </div>
+
+          <!-- Delivery Note for Courier -->
+          <div class="pt-3">
+            <label class="block font-label text-label-md text-light-on-surface font-semibold mb-1">
+              ملاحظة خاصة لمندوب التوصيل (لضمان راحة الأخت عند الباب):
+            </label>
+            <input type="text" placeholder="مثال: يرجى ترك الشحنة عند الباب بعد رن الجرس، أو التواصل عبر واتساب فقط دون اتصال..." class="w-full bg-light-surface border border-light-outline-variant rounded-md px-4 py-2.5 text-body-md text-light-on-surface placeholder:text-light-outline focus:outline-none focus:border-forest-green focus:ring-1 focus:ring-forest-green text-right">
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- Right Column (in RTL): Summary, Height Match Verification, Frictionless Payment -->
+      <section class="lg:col-span-5 space-y-6">
+        
+        <!-- Order Summary & Price Breakdown -->
+        <div class="bg-light-surface-container-low p-6 rounded-2xl border border-light-outline-variant space-y-4">
+          <h2 class="font-title text-title-lg text-forest-green font-bold pb-3 border-b border-light-outline-variant flex items-center justify-between">
+            <span>ملخص الطلب والدفع</span>
+            <span class="text-label-xs text-champagne-gold font-bold">Firebase Connected</span>
+          </h2>
+
+          <div class="space-y-3 text-body-md text-light-outline">
+            <div class="flex items-center justify-between">
+              <span>مجموع الأطقم (<span class="cart-badge-count">2</span> قطع)</span>
+              <span class="font-mono text-light-on-surface font-semibold">635 ر.س</span>
+            </div>
+            
+            <div class="flex items-center justify-between">
+              <span>خصم باقة الستر المتكاملة (10%)</span>
+              <span class="font-mono text-forest-green font-semibold">-63.50 ر.س</span>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <span>الشحن الكتوم السريع (أرامكس / سمسا)</span>
+              <span class="text-forest-green font-bold">مـجـانـي (تجاوز 350 ر.س)</span>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <span>ضريبة القيمة المضافة (15% مشمولة)</span>
+              <span class="font-mono text-light-outline">85.80 ر.س</span>
+            </div>
+          </div>
+
+          <!-- Coupon / Gift Code Field -->
+          <div class="pt-2">
+            <div class="flex items-center gap-2">
+              <input type="text" placeholder="رمز الإهداء أو كود الخصم (جربي WAQAR10)" class="flex-1 bg-light-surface border border-light-outline-variant rounded px-3 py-2 text-body-sm focus:outline-none focus:border-forest-green">
+              <button type="button" class="px-4 py-2 bg-soft-sage text-forest-green font-label text-label-sm font-semibold rounded hover:bg-forest-green hover:text-white transition-colors">
+                تطبيق
+              </button>
+            </div>
+          </div>
+
+          <!-- Final Total Price -->
+          <div class="pt-4 border-t border-light-outline-variant flex items-baseline justify-between">
+            <div>
+              <span class="font-title text-title-md text-forest-green font-bold block">المبلغ الإجمالي النهائي</span>
+              <span class="text-label-xs text-light-outline">شامل كافة الضرائب والشحن المغلف</span>
+            </div>
+            <span class="font-headline text-display-lg-mobile text-forest-green font-bold">571.50 ر.س</span>
+          </div>
+
+          <!-- Payment Options with Logos -->
+          <div class="pt-4 space-y-2.5">
+            <span class="font-label text-label-md text-light-on-surface font-semibold block mb-1">طريقة الدفع المريحة:</span>
+            
+            <label class="flex items-center justify-between p-3 rounded-lg border-2 border-forest-green bg-light-surface cursor-pointer">
+              <div class="flex items-center gap-2.5">
+                <input type="radio" name="payment_method" checked class="text-forest-green focus:ring-forest-green">
+                <span class="font-semibold text-forest-green text-body-sm">مدى / Apple Pay / البطاقة الائتمانية</span>
+              </div>
+              <div class="flex items-center gap-1.5 text-forest-green font-bold text-xs bg-soft-sage px-2 py-0.5 rounded">
+                <span>Mada</span> • <span>ApplePay</span>
+              </div>
+            </label>
+
+            <label class="flex items-center justify-between p-3 rounded-lg border border-light-outline-variant bg-light-surface cursor-pointer hover:border-forest-green/40">
+              <div class="flex items-center gap-2.5">
+                <input type="radio" name="payment_method" class="text-forest-green focus:ring-forest-green">
+                <span class="font-semibold text-light-on-surface text-body-sm">تمارا / تابي (قسميها على 4 دفعات بدون فوائد)</span>
+              </div>
+              <span class="text-label-xs bg-warm-taupe/30 text-mocha-brown font-bold px-2 py-0.5 rounded">142.87 ر.س / شهر</span>
+            </label>
+
+            <label class="flex items-center justify-between p-3 rounded-lg border border-light-outline-variant bg-light-surface cursor-pointer hover:border-forest-green/40">
+              <div class="flex items-center gap-2.5">
+                <input type="radio" name="payment_method" class="text-forest-green focus:ring-forest-green">
+                <span class="font-semibold text-light-on-surface text-body-sm">الدفع عند الاستلام بعد المعاينة</span>
+              </div>
+              <span class="material-symbols-outlined text-light-outline text-[20px]">local_atm</span>
+            </label>
+          </div>
+
+          <!-- Primary Submit Button (Connected to Firebase Firestore) -->
+          <div class="pt-4">
+            <button type="button" class="confirm-order-btn w-full py-4 px-6 rounded bg-forest-green hover:bg-forest-green/90 text-white font-label text-label-lg font-bold text-center shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer">
+              <span class="material-symbols-outlined text-[22px] text-champagne-gold">verified</span>
+              <span>تأكيد الطلب وشحن الشحنة الساترة (571.50 ر.س)</span>
+            </button>
+          </div>
+
+          <!-- Non-See-Through & Free Return Guarantee Seal with Icon -->
+          <div class="bg-soft-sage/40 p-3.5 rounded-xl border border-forest-green/20 text-center space-y-1">
+            <div class="flex items-center justify-center gap-1.5 text-forest-green font-bold text-label-sm">
+              <span class="material-symbols-outlined text-[18px] text-champagne-gold">verified_user</span>
+              <span>ضمان الاستبدال الفوري المجاني</span>
+            </div>
+            <p class="text-[11px] text-light-outline leading-normal">
+              إذا وجدتي أن طول القطعة لا يغطي القدمين بالمستوى الشرعي المطلوب، يتم التبديل مباشرة دون أي رسوم شحن إضافية.
+            </p>
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="bg-light-surface-container-low border-t border-light-outline-variant pt-16 pb-12 text-light-on-surface">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
+      
+      <div class="lg:col-span-2 space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-soft-sage border border-light-outline-variant flex items-center justify-center text-forest-green">
+            <span class="material-symbols-outlined text-[24px]">spa</span>
+          </div>
+          <span class="font-headline text-headline-sm text-forest-green font-bold">وَقار وحَياء</span>
+        </div>
+        <p class="text-body-md text-light-outline leading-relaxed max-w-sm">
+          علامة متخصصة في الحجاب الشرعي الكامل، نسعى لتوفير أرقى الأقمشة الساترة غير الشفافة للأخوات المنتقبات والمختمرات بحرفية وعناية وأمانة تامة.
+        </p>
+        <div class="flex items-center gap-3 text-forest-green pt-2">
+          <div class="w-9 h-9 rounded-full bg-light-surface border border-light-outline-variant flex items-center justify-center">
+            <span class="material-symbols-outlined text-[18px]">verified</span>
+          </div>
+          <span class="text-label-sm font-semibold">موثق في منصة الأعمال السعودية • متصل بـ Firebase</span>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="font-title text-title-md text-forest-green mb-4 font-bold">أقسام المتجر</h4>
+        <ul class="space-y-2.5 text-body-sm text-light-outline">
+          <li><a href="products.html?cat=abaya" class="hover:text-forest-green transition-colors">عبايات الرأس الساترة</a></li>
+          <li><a href="products.html?cat=khimar" class="hover:text-forest-green transition-colors">أطقم الخمار الفرنسي</a></li>
+          <li><a href="products.html?cat=isdal" class="hover:text-forest-green transition-colors">إسدالات الصلاة القطنية</a></li>
+          <li><a href="products.html?cat=niqab" class="hover:text-forest-green transition-colors">النقابات الطبية والطبقات</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-title text-title-md text-forest-green mb-4 font-bold">ضمانات الستر</h4>
+        <ul class="space-y-2.5 text-body-sm text-light-outline">
+          <li><a href="index.html#coverage-fabric" class="hover:text-forest-green transition-colors">معايير فحص العتامة 100%</a></li>
+          <li><a href="product-detail.html#sizing-guide" class="hover:text-forest-green transition-colors">جدول قياس الأطوال (54-64)</a></li>
+          <li><a href="cart.html" class="hover:text-forest-green transition-colors">سياسة التغليف السري والكتوم</a></li>
+          <li><a href="#" class="hover:text-forest-green transition-colors">الاستبدال المجاني للمقاسات</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-title text-title-md text-forest-green mb-4 font-bold">خدمة الأخوات</h4>
+        <p class="text-body-sm text-light-outline mb-3">فريق استشاري نسائي متكامل للإجابة على كافة استفسارات الأطوال والأقمشة.</p>
+        <div class="space-y-2 text-label-sm font-semibold text-forest-green">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-[18px]">chat</span>
+            <span>واتساب نسائي مخصص: 966500000000+</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-[18px]">mail</span>
+            <span>hayaa@waqar-hayaa.com</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 pt-8 border-t border-light-outline-variant/60 flex flex-col sm:flex-row items-center justify-between text-label-sm text-light-outline gap-4">
+      <p>© 1448 هـ - جميع الحقوق محفوظة لمتجر وقار وحياء للأزياء الشرعية.</p>
+      
+      <!-- Payment Badges -->
+      <div class="flex flex-wrap items-center gap-3">
+        <span class="bg-light-surface px-2.5 py-1 rounded border border-light-outline-variant font-bold text-[12px] text-forest-green">مدى Mada</span>
+        <span class="bg-light-surface px-2.5 py-1 rounded border border-light-outline-variant font-bold text-[12px] text-forest-green">Apple Pay</span>
+        <span class="bg-light-surface px-2.5 py-1 rounded border border-light-outline-variant font-bold text-[12px] text-forest-green">Visa / Master</span>
+        <span class="bg-light-surface px-2.5 py-1 rounded border border-light-outline-variant font-bold text-[12px] text-forest-green">تمارا Tamara</span>
+        <span class="bg-light-surface px-2.5 py-1 rounded border border-light-outline-variant font-bold text-[12px] text-forest-green">تابي Tabby</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,162 @@
+/* ========================================================
+   متجر وقار وحياء للزي الشرعي - أنماط مخصصة إضافية
+   Waqar & Hayaa Modest Fashion - Custom CSS
+   ======================================================== */
+
+@charset "UTF-8";
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF8F5;
+}
+::-webkit-scrollbar-thumb {
+  background: #C5A880;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2F4F4F;
+}
+
+/* Animations & Transitions */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(197, 168, 128, 0.4); }
+  50% { box-shadow: 0 0 0 10px rgba(197, 168, 128, 0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s cubic-bezier(0.2, 0, 0, 1) forwards;
+}
+
+.animate-slide-down {
+  animation: slideDown 0.3s cubic-bezier(0.2, 0, 0, 1) forwards;
+}
+
+.pulse-glow {
+  animation: pulseGlow 2.5s infinite;
+}
+
+/* Toast Notifications Container */
+#waqar-toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 380px;
+  width: calc(100% - 48px);
+  pointer-events: none;
+}
+
+.waqar-toast {
+  pointer-events: auto;
+  background: #FAF8F5;
+  color: #2C2A29;
+  border: 1px solid #C5A880;
+  border-right: 4px solid #2F4F4F;
+  border-radius: 12px;
+  padding: 14px 18px;
+  box-shadow: 0 10px 25px -5px rgba(44, 42, 41, 0.15);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.waqar-toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.waqar-toast.success {
+  border-right-color: #2F4F4F;
+}
+
+.waqar-toast.info {
+  border-right-color: #C5A880;
+}
+
+.waqar-toast.error {
+  border-right-color: #b91c1c;
+}
+
+/* Modal Overlay */
+.waqar-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(28, 27, 25, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.25s ease-out;
+}
+
+.waqar-modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.waqar-modal-content {
+  background: #FAF8F5;
+  border-radius: 20px;
+  max-width: 540px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  transform: scale(0.95);
+  transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1);
+  border: 1px solid #D8CEC4;
+}
+
+.waqar-modal-overlay.active .waqar-modal-content {
+  transform: scale(1);
+}
+
+/* Interactive States */
+.product-card-hover {
+  transition: transform 0.28s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.28s ease;
+}
+
+.product-card-hover:hover {
+  transform: translateY(-4px);
+}
+
+/* Sizing Guide Drawer / Modal */
+.size-badge-selected {
+  border: 2px solid #2F4F4F !important;
+  background-color: rgba(226, 232, 223, 0.5) !important;
+}
+
+/* Print Stylesheet for Discreet Invoice */
+@media print {
+  header, footer, aside, button, .no-print {
+    display: none !important;
+  }
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+}

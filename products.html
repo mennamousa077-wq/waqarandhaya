@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تشكيلة الحجاب الشرعي وأزياء المنتقبات — وقار وحياء</title>
+  
+  <!-- Tailwind CSS & Configuration -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    globalThis.tailwind = globalThis.tailwind || {};
+    globalThis.tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'champagne-gold': '#C5A880',
+            'soft-sage': '#E2E8DF',
+            'warm-taupe': '#D8CEC4',
+            'mocha-brown': '#5C4033',
+            'forest-green': '#2F4F4F',
+            'light-primary': '#2F4F4F',
+            'light-on-primary': '#FFFFFF',
+            'light-secondary': '#5C4033',
+            'light-on-secondary': '#FFFFFF',
+            'light-surface': '#FAF8F5',
+            'light-on-surface': '#2C2A29',
+            'light-surface-container-low': '#F4EFEA',
+            'light-surface-container': '#EAE3DC',
+            'light-surface-container-high': '#E2D9D0',
+            'light-outline': '#A3978B',
+            'light-outline-variant': '#D8CEC4',
+            'light-accent': '#C5A880',
+            'light-on-accent': '#2C2A29',
+          },
+          borderRadius: {
+            'sm': '6px',
+            'DEFAULT': '10px',
+            'md': '14px',
+            'lg': '20px',
+            'xl': '28px',
+            'full': '9999px',
+          },
+          fontFamily: {
+            'display': ['"Amiri"', 'sans-serif'],
+            'headline': ['"Amiri"', 'sans-serif'],
+            'title': ['"Noto Kufi Arabic"', 'sans-serif'],
+            'body': ['"Noto Kufi Arabic"', 'sans-serif'],
+            'label': ['"Noto Kufi Arabic"', 'sans-serif'],
+          },
+          fontSize: {
+            'display-lg': ['48px', { lineHeight: '58px', letterSpacing: '-0.5px', fontWeight: '700' }],
+            'display-lg-mobile': ['32px', { lineHeight: '40px', letterSpacing: '-0.25px', fontWeight: '700' }],
+            'headline-lg': ['36px', { lineHeight: '44px', letterSpacing: '-0.25px', fontWeight: '700' }],
+            'headline-lg-mobile': ['28px', { lineHeight: '36px', fontWeight: '700' }],
+            'headline-md': ['28px', { lineHeight: '36px', fontWeight: '700' }],
+            'headline-md-mobile': ['22px', { lineHeight: '30px', fontWeight: '700' }],
+            'headline-sm': ['22px', { lineHeight: '30px', fontWeight: '700' }],
+            'title-lg': ['20px', { lineHeight: '28px', fontWeight: '600' }],
+            'title-md': ['16px', { lineHeight: '24px', fontWeight: '600' }],
+            'body-lg': ['16px', { lineHeight: '26px', fontWeight: '400' }],
+            'body-md': ['14px', { lineHeight: '22px', fontWeight: '400' }],
+            'label-lg': ['14px', { lineHeight: '20px', fontWeight: '600' }],
+            'label-md': ['12px', { lineHeight: '18px', fontWeight: '500' }],
+            'label-sm': ['11px', { lineHeight: '16px', fontWeight: '500' }],
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Typography & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&amp;family=Noto+Kufi+Arabic:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Store, Cart & Interactive App Scripts -->
+  <script src="js/store-data.js" defer></script>
+  <script src="js/cart.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script type="module" src="js/firebase-config.js"></script>
+
+  <!-- Firebase v13.4.0 Direct Integration -->
+  <script type="module">
+    import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
+    import { getAnalytics, logEvent as fbLogEvent } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-analytics.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDK-LcQqUt0YSF9DtOg3m9w_-1gF7H-awQ",
+      authDomain: "tabliya-and-falafel-restaurant.firebaseapp.com",
+      projectId: "tabliya-and-falafel-restaurant",
+      storageBucket: "tabliya-and-falafel-restaurant.firebasestorage.app",
+      messagingSenderId: "763122319755",
+      appId: "1:763122319755:web:077e01d9fa88a9f8bcaf8e",
+      measurementId: "G-YBQ0FGJ24Z"
+    };
+
+    if (!window.WaqarFirebase) {
+      try {
+        const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+        let analytics = null;
+        if (window.location.protocol === 'http:' || window.location.protocol === 'https:') {
+          try { analytics = getAnalytics(app); } catch (e) {}
+        }
+        const db = getFirestore(app);
+        window.WaqarFirebase = {
+          app,
+          analytics,
+          db,
+          firebaseConfig,
+          isReady: () => true,
+          logEvent: (name, params = {}) => {
+            try { if (analytics) fbLogEvent(analytics, name, params); } catch (e) {}
+          },
+          submitOrder: async (orderData) => {
+            try {
+              const docRef = await addDoc(collection(db, "orders"), {
+                ...orderData,
+                status: 'جديد - بانتظار الشحن الكتوم',
+                createdAt: serverTimestamp(),
+                localTimestamp: new Date().toISOString()
+              });
+              return { success: true, id: docRef.id, fromFirebase: true };
+            } catch (err) {
+              const localId = 'LOCAL-' + Date.now().toString(36).toUpperCase();
+              return { success: true, id: localId, fromFirebase: false };
+            }
+          },
+          submitConsultation: async (consultData) => {
+            try {
+              const docRef = await addDoc(collection(db, "consultations"), {
+                ...consultData,
+                createdAt: serverTimestamp()
+              });
+              return { success: true, id: docRef.id };
+            } catch (e) {
+              return { success: true, id: 'LOCAL-' + Date.now() };
+            }
+          }
+        };
+        window.dispatchEvent(new CustomEvent('waqar-firebase-ready'));
+      } catch (e) {
+        console.warn("Firebase init warning:", e);
+      }
+    }
+  </script>
+</head>
+<body class="bg-light-surface text-light-on-surface font-body min-h-screen flex flex-col antialiased selection:bg-soft-sage selection:text-forest-green" data-page="collection">
+
+  <!-- Top Announcement Bar -->
+  <aside class="bg-forest-green text-light-on-primary py-2 px-4 text-center border-b border-forest-green/20">
+    <div class="max-w-7xl mx-auto flex items-center justify-between text-label-sm">
+      <div class="hidden md:flex items-center gap-2">
+        <span class="material-symbols-outlined text-[16px] text-champagne-gold">verified</span>
+        <span>ضمان شرعي: كافة الأقمشة معتمة 100% وغير شفافة إطلاقاً</span>
+      </div>
+      <div class="mx-auto flex items-center gap-3">
+        <span class="bg-champagne-gold/20 text-champagne-gold px-2 py-0.5 rounded text-[11px] font-semibold">خدمة مخصصة</span>
+        <span>شحن مغلّف وسري مجاني للطلبات فوق 350 ر.س | استبدال فوري للمقاسات</span>
+      </div>
+      <div class="hidden md:flex items-center gap-4 text-light-on-primary/80">
+        <button type="button" onclick="openWaqarSizingModal()" class="hover:text-white cursor-pointer transition-colors">مساعدة القياس الشرعي</button>
+        <span>•</span>
+        <span class="hover:text-white cursor-pointer">العربية</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Global Navigation Header -->
+  <header class="sticky top-0 z-40 bg-light-surface/95 backdrop-blur-md border-b border-light-outline-variant">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-6">
+      
+      <!-- Brand & Mark -->
+      <a href="index.html" class="flex items-center gap-3 shrink-0">
+        <div class="w-10 h-10 rounded-full bg-soft-sage border border-light-outline-variant flex items-center justify-center text-forest-green">
+          <span class="material-symbols-outlined text-[24px]">spa</span>
+        </div>
+        <div>
+          <span class="font-headline text-headline-sm text-forest-green font-bold tracking-tight block leading-none">وَقار وحَياء</span>
+          <span class="text-[11px] text-mocha-brown block mt-0.5 tracking-wider">Sanctuary of Modest Grace</span>
+        </div>
+      </a>
+
+      <!-- Primary Nav Links -->
+      <nav class="hidden lg:flex items-center gap-8 text-title-md">
+        <a href="index.html" class="text-light-on-surface hover:text-forest-green transition-colors">الرئيسية</a>
+        <a href="products.html?cat=abaya" class="text-forest-green font-semibold border-b-2 border-forest-green pb-1">عبايات الرأس الساترة</a>
+        <a href="products.html?cat=khimar" class="text-light-on-surface hover:text-forest-green transition-colors">أطقم الخمار (قطعتين و 3)</a>
+        <a href="products.html?cat=isdal" class="text-light-on-surface hover:text-forest-green transition-colors">إسدالات الصلاة الواسعة</a>
+        <a href="products.html?cat=niqab" class="text-light-on-surface hover:text-forest-green transition-colors">تشكيلة النقابات الطبية</a>
+        <a href="index.html#coverage-fabric" class="text-light-on-surface hover:text-forest-green transition-colors">دليل الأقمشة والعتامة</a>
+      </nav>
+
+      <!-- Search & User Actions -->
+      <div class="flex items-center gap-4">
+        <div class="relative hidden sm:block w-64 xl:w-72">
+          <input type="search" placeholder="بحث: كريب سعودي، خمار فرنسي..." class="w-full bg-light-surface-container-low border border-light-outline-variant rounded-full pr-10 pl-4 py-2 text-body-md placeholder:text-light-outline focus:outline-none focus:border-forest-green focus:ring-1 focus:ring-forest-green text-right">
+          <span class="material-symbols-outlined absolute right-3 top-2.5 text-light-outline text-[20px]">search</span>
+        </div>
+
+        <a href="products.html" aria-label="المفضلة" class="w-10 h-10 rounded-full bg-light-surface-container-low border border-light-outline-variant flex items-center justify-center text-light-on-surface hover:text-forest-green transition-colors">
+          <span class="material-symbols-outlined text-[20px]">favorite_border</span>
+        </a>
+
+        <a href="cart.html" aria-label="السلة" class="relative flex items-center gap-2 bg-soft-sage text-forest-green px-4 py-2 rounded-full border border-forest-green/20 hover:bg-forest-green hover:text-white transition-colors">
+          <span class="material-symbols-outlined text-[20px]">shopping_bag</span>
+          <span class="text-label-md font-semibold hidden md:inline">الحقيبة</span>
+          <span class="cart-badge-count w-5 h-5 rounded-full bg-forest-green text-white text-[11px] flex items-center justify-center font-bold">2</span>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Page Breadcrumb & Header Banner with Image -->
+  <section class="relative bg-light-surface-container-low border-b border-light-outline-variant overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 py-8">
+      
+      <div class="flex items-center gap-2 text-label-sm text-light-outline mb-3">
+        <a href="index.html" class="hover:text-forest-green transition-colors">الرئيسية</a>
+        <span>/</span>
+        <span class="text-forest-green font-semibold">المجموعة الشرعية الكاملة</span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div class="lg:col-span-8 space-y-2">
+          <div class="inline-flex items-center gap-1.5 bg-champagne-gold/20 text-forest-green text-[12px] font-bold px-3 py-1 rounded-full">
+            <span class="material-symbols-outlined text-[15px] text-champagne-gold">verified</span>
+            <span>كافة الأقمشة معتمدة وغير شفافة 100%</span>
+          </div>
+          <h1 class="font-headline text-headline-lg md:text-display-lg-mobile text-forest-green">
+            تشكيلة الحجاب الشرعي وأزياء المنتقبات
+          </h1>
+          <p class="text-body-md text-light-outline max-w-2xl leading-relaxed">
+            تصفحي القطع الموثوقة مع إمكانية التصفية المتقدمة حسب الأطوال، درجة العتامة، ونوع الخمار مع ضمان الاستبدال المجاني.
+          </p>
+        </div>
+
+        <div class="lg:col-span-4 flex items-center justify-end gap-3">
+          <div class="rounded-xl overflow-hidden border border-light-outline-variant shadow-md h-28 w-full max-w-sm relative">
+            <img src="images/hero-banner.jpg" alt="أزياء الحشمة الشرعية" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-forest-green/40 flex items-center justify-center p-2 text-center">
+              <span class="text-white text-label-sm font-bold bg-black/40 px-3 py-1 rounded-full backdrop-blur-sm">خريف وشتاء 1448 هـ</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Main Content: Modesty Filters Sidebar + Product Grid -->
+  <main class="flex-1 max-w-7xl mx-auto px-6 py-10 w-full">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      
+      <!-- Specialized Modesty Filters Sidebar -->
+      <aside class="lg:col-span-3 space-y-6">
+        
+        <div class="bg-light-surface-container-low p-5 rounded-xl border border-light-outline-variant">
+          <div class="flex items-center justify-between pb-3 border-b border-light-outline-variant mb-4">
+            <h3 class="font-title text-title-md text-forest-green font-bold flex items-center gap-2">
+              <span class="material-symbols-outlined text-[20px]">filter_list</span>
+              <span>فلاتر الحشمة المخصصة</span>
+            </h3>
+            <button type="button" class="text-label-xs text-light-outline hover:text-forest-green underline">إعادة ضبط</button>
+          </div>
+
+          <!-- 1. Filter by Total Length (Inches) -->
+          <div class="mb-6">
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-label text-label-md text-light-on-surface font-semibold">1. الطول الكلي (إنش / سم)</span>
+              <button type="button" onclick="openWaqarSizingModal()" class="text-[11px] text-champagne-gold font-bold hover:underline flex items-center gap-0.5">
+                <span class="material-symbols-outlined text-[13px]">straighten</span>
+                <span>جدول القامة</span>
+              </button>
+            </div>
+            <div class="space-y-2 text-body-sm text-light-outline">
+              <label class="flex items-center justify-between p-2 rounded hover:bg-light-surface cursor-pointer bg-light-surface border border-forest-green/30">
+                <span class="flex items-center gap-2 text-forest-green font-semibold">
+                  <input type="checkbox" checked class="rounded text-forest-green focus:ring-forest-green">
+                  <span>طول 58 إنش (لقامة 158-163 سم)</span>
+                </span>
+                <span class="text-label-xs bg-soft-sage text-forest-green px-1.5 py-0.5 rounded font-mono">14</span>
+              </label>
+
+              <label class="flex items-center justify-between p-2 rounded hover:bg-light-surface cursor-pointer">
+                <span class="flex items-center gap-2">
+                  <input type="checkbox" class="rounded text-forest-green focus:ring-forest-green">
+                  <span>طول 60 إنش (لقامة 164-169 سم)</span>
+                </span>
+                <span class="text-label-xs text-light-outline font-mono">16</span>
+              </label>
+
+              <label class="flex items-center justify-between p-2 rounded hover:bg-light-surface cursor-pointer">
+                <span class="flex items-center gap-2">
+                  <input type="checkbox" class="rounded text-forest-green focus:ring-forest-green">
+                  <span>طول 62 إنش (لقامة 170-175 سم)</span>
+                </span>
+                <span class="text-label-xs text-light-outline font-mono">9</span>
+              </label>
+
+              <label class="flex items-center justify-between p-2 rounded hover:bg-light-surface cursor-pointer">
+                <span class="flex items-center gap-2">
+                  <input type="checkbox" class="rounded text-forest-green focus:ring-forest-green">
+                  <span>طول خاص 64 إنش (فوق 176 سم)</span>
+                </span>
+                <span class="text-label-xs text-light-outline font-mono">5</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- 2. Filter by Opacity Level -->
+          <div class="mb-6 pt-4 border-t border-light-outline-variant/60">
+            <span class="font-label text-label-md text-light-on-surface font-semibold block mb-2">2. درجة العتامة واختبار الضوء</span>
+            <div class="space-y-2 text-body-sm text-light-outline">
+              <label class="flex items-center justify-between p-2 rounded hover:bg-light-surface cursor-pointer bg-light-surface border border-forest-green/30">
+                <span class="flex items-center gap-2 text-forest-green font-semibold">
+                  <input type="radio" name="opacity" checked class="text-forest-green focus:ring-forest-green">
+                  <span>معتم 100% (ضمان عدم الشفافية)</span>
+                </span>
+                <span class="material-symbols-outlined text-[16px] text-champagne-gold">verified</span>
+              </label>
+
+              <label class="flex items-center justify-between p-2 rounded hover:bg-light-surface cursor-pointer">
+                <span class="flex items-center gap-2">
+                  <input type="radio" name="opacity" class="text-forest-green focus:ring-forest-green">
+                  <span>طبقتين كاملتين (Double-Layered)</span>
+                </span>
+                <span class="text-label-xs text-light-outline font-mono">12</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- 3. Filter by Cut & Style -->
+          <div class="mb-6 pt-4 border-t border-light-outline-variant/60">
+            <span class="font-label text-label-md text-light-on-surface font-semibold block mb-2">3. نوع القصّة واللباس الشرعي</span>
+            <div class="space-y-1.5 text-body-sm text-light-outline">
+              <label class="flex items-center gap-2 p-1.5 hover:bg-light-surface rounded cursor-pointer">
+                <input type="checkbox" checked class="rounded text-forest-green focus:ring-forest-green">
+                <span>عباية رأس سابغة (Head Abaya)</span>
+              </label>
+              <label class="flex items-center gap-2 p-1.5 hover:bg-light-surface rounded cursor-pointer">
+                <input type="checkbox" checked class="rounded text-forest-green focus:ring-forest-green">
+                <span>عباية كتف فضفاضة جداً وبشت واسع</span>
+              </label>
+              <label class="flex items-center gap-2 p-1.5 hover:bg-light-surface rounded cursor-pointer">
+                <input type="checkbox" checked class="rounded text-forest-green focus:ring-forest-green">
+                <span>خمار طويل للركبة (French Khimar)</span>
+              </label>
+              <label class="flex items-center gap-2 p-1.5 hover:bg-light-surface rounded cursor-pointer">
+                <input type="checkbox" class="rounded text-forest-green focus:ring-forest-green">
+                <span>جلباب قطعتين مع تنورة سابغة</span>
+              </label>
+              <label class="flex items-center gap-2 p-1.5 hover:bg-light-surface rounded cursor-pointer">
+                <input type="checkbox" class="rounded text-forest-green focus:ring-forest-green">
+                <span>إسدال صلاة قطني بطرحة مدمجة</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- 4. Filter by Niqab Compatibility / Bundling -->
+          <div class="pt-4 border-t border-light-outline-variant/60">
+            <span class="font-label text-label-md text-light-on-surface font-semibold block mb-2">4. توافق النقاب وإمكانية الإكمال</span>
+            <div class="space-y-1.5 text-body-sm text-light-outline">
+              <label class="flex items-center gap-2 p-1.5 hover:bg-light-surface rounded cursor-pointer">
+                <input type="checkbox" checked class="rounded text-forest-green focus:ring-forest-green">
+                <span>يشمل نقاب مطابق من نفس القماش</span>
+              </label>
+              <label class="flex items-center gap-2 p-1.5 hover:bg-light-surface rounded cursor-pointer">
+                <input type="checkbox" class="rounded text-forest-green focus:ring-forest-green">
+                <span>متوافق مع النقابات المقواة والمايلة</span>
+              </label>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Trust Note inside Sidebar with Illustration -->
+        <div class="bg-soft-sage/60 p-5 rounded-xl border border-forest-green/20 text-center space-y-3">
+          <div class="w-14 h-14 rounded-full bg-forest-green text-champagne-gold flex items-center justify-center mx-auto shadow-sm">
+            <span class="material-symbols-outlined text-[32px]">verified_user</span>
+          </div>
+          <h4 class="font-title text-title-md text-forest-green font-bold">تعهد النقاء والستر</h4>
+          <p class="text-body-sm text-light-outline leading-relaxed">
+            إذا استلمتِ أي قطعة وثبتت شفافيتها أو عدم ملاءمة طولها للستر الشرعي، نستبدلها لكِ فوراً على حسابنا مع شحن مجاني.
+          </p>
+          <img src="images/opacity-test.jpg" alt="معتمد مخبرياً" class="rounded-lg h-24 w-full object-cover">
+        </div>
+
+      </aside>
+
+      <!-- Products Grid -->
+      <section class="lg:col-span-9 space-y-6">
+        
+        <!-- Active Filter Chips -->
+        <div class="flex flex-wrap items-center gap-2 bg-light-surface-container-low p-3.5 rounded-lg border border-light-outline-variant">
+          <span class="text-label-sm text-light-outline font-semibold">الفلاتر المطبقة:</span>
+          
+          <span class="inline-flex items-center gap-1.5 bg-forest-green text-white text-label-sm px-3 py-1 rounded-full">
+            <span>طول 58 إنش</span>
+            <span class="material-symbols-outlined text-[14px] cursor-pointer">close</span>
+          </span>
+
+          <span class="inline-flex items-center gap-1.5 bg-forest-green text-white text-label-sm px-3 py-1 rounded-full">
+            <span>عتامة 100%</span>
+            <span class="material-symbols-outlined text-[14px] cursor-pointer">close</span>
+          </span>
+
+          <span class="inline-flex items-center gap-1.5 bg-forest-green text-white text-label-sm px-3 py-1 rounded-full">
+            <span>عباءات رأس وخمار طويل</span>
+            <span class="material-symbols-outlined text-[14px] cursor-pointer">close</span>
+          </span>
+
+          <button type="button" class="text-label-sm text-mocha-brown hover:underline font-semibold pr-2">مسح الكل</button>
+        </div>
+
+        <!-- Product Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+          
+          <!-- Card 1 (Royal Head Abaya) -->
+          <article class="bg-light-surface-container-low rounded-xl border border-light-outline-variant overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between">
+            <div>
+              <div class="relative aspect-[3/4] overflow-hidden bg-warm-taupe/20">
+                <img src="images/abaya-sakina-royal.jpg" alt="طقم «سكينة» الملكي: عباءة رأس وخمار مدمج كريب صالونة" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                <div class="absolute top-3 right-3 bg-forest-green/95 text-white text-[11px] font-label px-2.5 py-1 rounded-full flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[13px] text-champagne-gold">verified</span>
+                  <span>100% غير شفاف معتمد</span>
+                </div>
+                <div class="absolute bottom-3 left-3 bg-light-surface/90 text-forest-green text-[11px] font-mono px-2 py-0.5 rounded font-bold">
+                  متوفر: 56, 58, 60, 62″
+                </div>
+              </div>
+              <div class="p-5">
+                <div class="flex items-center justify-between text-label-xs text-light-outline mb-1.5">
+                  <span>عباءة رأس إسلامية</span>
+                  <span class="text-champagne-gold font-semibold">كريب صالونة (260 GSM)</span>
+                </div>
+                <h3 class="font-title text-title-md text-light-on-surface group-hover:text-forest-green transition-colors mb-2">
+                  <a href="product-detail.html?id=royal-head-abaya-sakina">طقم عباية الرأس الفاخرة «سَكينة» مع بشت ساترة</a>
+                </h3>
+                <p class="text-body-sm text-light-outline line-clamp-2">
+                  سواد فاحم، قماش ثقيل لا يلتصق، مع أكمام مطاطية محكمة ومرفق معها نقاب ربطة مجاني.
+                </p>
+              </div>
+            </div>
+            <div class="p-5 pt-0 border-t border-light-outline-variant/60 flex items-center justify-between mt-2">
+              <div>
+                <span class="text-label-xs text-light-outline block">السعر</span>
+                <span class="font-headline text-headline-sm text-forest-green font-bold">340 ر.س</span>
+              </div>
+              <a href="product-detail.html?id=royal-head-abaya-sakina" class="px-3.5 py-2 bg-forest-green hover:bg-forest-green/90 text-white rounded text-label-sm font-semibold transition-colors flex items-center gap-1">
+                <span>تحديد الطول</span>
+                <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Card 2 (French Khimar Set) -->
+          <article class="bg-light-surface-container-low rounded-xl border border-light-outline-variant overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between">
+            <div>
+              <div class="relative aspect-[3/4] overflow-hidden bg-warm-taupe/20">
+                <img src="images/khimar-afaf-mocha.webp" alt="طقم الخمار الفرنسي «عَفاف» قطعتين (لون الموكا الدافئ)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                <div class="absolute top-3 right-3 bg-mocha-brown/95 text-white text-[11px] font-label px-2.5 py-1 rounded-full flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[13px] text-champagne-gold">auto_awesome</span>
+                  <span>طقم قطعتين كامل</span>
+                </div>
+                <div class="absolute bottom-3 left-3 bg-light-surface/90 text-forest-green text-[11px] font-mono px-2 py-0.5 rounded font-bold">
+                  طول الخمار: 135 سم
+                </div>
+              </div>
+              <div class="p-5">
+                <div class="flex items-center justify-between text-label-xs text-light-outline mb-1.5">
+                  <span>أطقم خمار فرنسي</span>
+                  <span class="text-champagne-gold font-semibold">حرير المدينة (210 GSM)</span>
+                </div>
+                <h3 class="font-title text-title-md text-light-on-surface group-hover:text-forest-green transition-colors mb-2">
+                  <a href="product-detail.html?id=french-khimar-afaf">طقم خمار «عَفاف» الطويل مع تنورة دائرية واسعة</a>
+                </h3>
+                <p class="text-body-sm text-light-outline line-clamp-2">
+                  خمار مثلث يغطي ما بعد الركبتين، ثابت بحزام داخلي، مصنوع من حرير المدينة الناعم غير الشفاف.
+                </p>
+              </div>
+            </div>
+            <div class="p-5 pt-0 border-t border-light-outline-variant/60 flex items-center justify-between mt-2">
+              <div>
+                <span class="text-label-xs text-light-outline block">السعر</span>
+                <span class="font-headline text-headline-sm text-forest-green font-bold">295 ر.س</span>
+              </div>
+              <a href="product-detail.html?id=french-khimar-afaf" class="px-3.5 py-2 bg-forest-green hover:bg-forest-green/90 text-white rounded text-label-sm font-semibold transition-colors flex items-center gap-1">
+                <span>تحديد الطول</span>
+                <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Card 3 (Prayer Dress) -->
+          <article class="bg-light-surface-container-low rounded-xl border border-light-outline-variant overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between">
+            <div>
+              <div class="relative aspect-[3/4] overflow-hidden bg-warm-taupe/20">
+                <img src="images/isdal-salat-wasi.webp" alt="إسدالات الصلاة الواسعة" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                <div class="absolute top-3 right-3 bg-forest-green/95 text-white text-[11px] font-label px-2.5 py-1 rounded-full flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[13px] text-champagne-gold">verified</span>
+                  <span>قطن طبيعي 100%</span>
+                </div>
+                <div class="absolute bottom-3 left-3 bg-light-surface/90 text-forest-green text-[11px] font-mono px-2 py-0.5 rounded font-bold">
+                  مقاس حر فسيح
+                </div>
+              </div>
+              <div class="p-5">
+                <div class="flex items-center justify-between text-label-xs text-light-outline mb-1.5">
+                  <span>إسدالات الصلاة المريحة</span>
+                  <span class="text-champagne-gold font-semibold">قطن بارد (200 GSM)</span>
+                </div>
+                <h3 class="font-title text-title-md text-light-on-surface group-hover:text-forest-green transition-colors mb-2">
+                  <a href="product-detail.html?id=prayer-dress-mihrab">إسدال «مِحراب» الواسع مع طرحة متصلة وسحاب مخفي</a>
+                </h3>
+                <p class="text-body-sm text-light-outline line-clamp-2">
+                  تصميم مريح للصلوات الطويلة والتراويح، يستر القدمين بالكامل ولا يحتاج لتعديل أثناء الركوع والسجود.
+                </p>
+              </div>
+            </div>
+            <div class="p-5 pt-0 border-t border-light-outline-variant/60 flex items-center justify-between mt-2">
+              <div>
+                <span class="text-label-xs text-light-outline block">السعر</span>
+                <span class="font-headline text-headline-sm text-forest-green font-bold">185 ر.س</span>
+              </div>
+              <a href="product-detail.html?id=prayer-dress-mihrab" class="px-3.5 py-2 bg-forest-green hover:bg-forest-green/90 text-white rounded text-label-sm font-semibold transition-colors flex items-center gap-1">
+                <span>تحديد الطول</span>
+                <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Card 4 (Niqab Set Bundle) -->
+          <article class="bg-light-surface-container-low rounded-xl border border-light-outline-variant overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between">
+            <div>
+              <div class="relative aspect-[3/4] overflow-hidden bg-warm-taupe/20">
+                <img src="images/niqab-amira-trio.webp" alt="نقابات مائلة وطبقات متعددة وخيط عين ناعم" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                <div class="absolute top-3 right-3 bg-champagne-gold text-forest-green text-[11px] font-label px-2.5 py-1 rounded-full flex items-center gap-1 font-bold">
+                  <span class="material-symbols-outlined text-[13px]">air</span>
+                  <span>تنفس سهل وطبي</span>
+                </div>
+                <div class="absolute bottom-3 left-3 bg-light-surface/90 text-forest-green text-[11px] font-mono px-2 py-0.5 rounded font-bold">
+                  طقم 3 نقابات
+                </div>
+              </div>
+              <div class="p-5">
+                <div class="flex items-center justify-between text-label-xs text-light-outline mb-1.5">
+                  <span>النقابات والبراقع</span>
+                  <span class="text-champagne-gold font-semibold">شيفون كوري درجة أولى</span>
+                </div>
+                <h3 class="font-title text-title-md text-light-on-surface group-hover:text-forest-green transition-colors mb-2">
+                  <a href="product-detail.html?id=niqab-trio-pack">باقة نقابات «حشمة» الثلاثية (مائل، طبقتين، وخيط عين)</a>
+                </h3>
+                <p class="text-body-sm text-light-outline line-clamp-2">
+                  أربطة مريحة لا تضغط على الرأس، خيط وسط ناعم لا يؤذي الأعين ومصممة لارتداء مريح مع النظارات الطبية.
+                </p>
+              </div>
+            </div>
+            <div class="p-5 pt-0 border-t border-light-outline-variant/60 flex items-center justify-between mt-2">
+              <div>
+                <span class="text-label-xs text-light-outline block">السعر</span>
+                <span class="font-headline text-headline-sm text-forest-green font-bold">145 ر.س</span>
+              </div>
+              <a href="product-detail.html?id=niqab-trio-pack" class="px-3.5 py-2 bg-forest-green hover:bg-forest-green/90 text-white rounded text-label-sm font-semibold transition-colors flex items-center gap-1">
+                <span>عرض الباقة</span>
+                <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Card 5 (Shoulder Wide Cut Abaya) -->
+          <article class="bg-light-surface-container-low rounded-xl border border-light-outline-variant overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between">
+            <div>
+              <div class="relative aspect-[3/4] overflow-hidden bg-warm-taupe/20">
+                <img src="images/bisht-mahaba-fasih.webp" alt="بشت «مَهابة» الفسيح بقصة مغلقة بالكامل وأزرار مخفية" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                <div class="absolute top-3 right-3 bg-forest-green/95 text-white text-[11px] font-label px-2.5 py-1 rounded-full flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[13px] text-champagne-gold">verified</span>
+                  <span>قصة بشت إسلامي واسع</span>
+                </div>
+                <div class="absolute bottom-3 left-3 bg-light-surface/90 text-forest-green text-[11px] font-mono px-2 py-0.5 rounded font-bold">
+                  متوفر: 58, 60, 62, 64″
+                </div>
+              </div>
+              <div class="p-5">
+                <div class="flex items-center justify-between text-label-xs text-light-outline mb-1.5">
+                  <span>عباءات كتف فضفاضة</span>
+                  <span class="text-champagne-gold font-semibold">كريب ملكي (250 GSM)</span>
+                </div>
+                <h3 class="font-title text-title-md text-light-on-surface group-hover:text-forest-green transition-colors mb-2">
+                  <a href="product-detail.html?id=shoulder-abaya-mahaba">بشت «مَهابة» الفسيح بقصة مغلقة بالكامل وأزرار مخفية</a>
+                </h3>
+                <p class="text-body-sm text-light-outline line-clamp-2">
+                  عرض محيطي يتجاوز 180 سم لضمان عدم رسم الأكتاف أو المعالم، مع ياقة صينية وقورة وستر ممتد.
+                </p>
+              </div>
+            </div>
+            <div class="p-5 pt-0 border-t border-light-outline-variant/60 flex items-center justify-between mt-2">
+              <div>
+                <span class="text-label-xs text-light-outline block">السعر</span>
+                <span class="font-headline text-headline-sm text-forest-green font-bold">365 ر.س</span>
+              </div>
+              <a href="product-detail.html?id=shoulder-abaya-mahaba" class="px-3.5 py-2 bg-forest-green hover:bg-forest-green/90 text-white rounded text-label-sm font-semibold transition-colors flex items-center gap-1">
+                <span>تحديد الطول</span>
+                <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Card 6 (Jilbab 2-Piece) -->
+          <article class="bg-light-surface-container-low rounded-xl border border-light-outline-variant overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between">
+            <div>
+              <div class="relative aspect-[3/4] overflow-hidden bg-warm-taupe/20">
+                <img src="images/jilbab-rehab-two-piece.webp" alt="طقم جلباب «رِحاب» قطعتين مع تنورة كلوش فسيحة" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                <div class="absolute top-3 right-3 bg-forest-green/95 text-white text-[11px] font-label px-2.5 py-1 rounded-full flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[13px] text-champagne-gold">verified</span>
+                  <span>تغطية ما بعد الركبة</span>
+                </div>
+                <div class="absolute bottom-3 left-3 bg-light-surface/90 text-forest-green text-[11px] font-mono px-2 py-0.5 rounded font-bold">
+                  طقم 2 قطعة
+                </div>
+              </div>
+              <div class="p-5">
+                <div class="flex items-center justify-between text-label-xs text-light-outline mb-1.5">
+                  <span>جلباب إسلامي كلاسيكي</span>
+                  <span class="text-champagne-gold font-semibold">كريب صيفي ناعم (220 GSM)</span>
+                </div>
+                <h3 class="font-title text-title-md text-light-on-surface group-hover:text-forest-green transition-colors mb-2">
+                  <a href="product-detail.html?id=jilbab-rehab">طقم جلباب «رِحاب» قطعتين مع تنورة كلوش فسيحة</a>
+                </h3>
+                <p class="text-body-sm text-light-outline line-clamp-2">
+                  يمنحكِ سهولة الخطو بدون كشف الساقين مع تصميم متناسق ومريح طوال اليوم في السفر والزيارات.
+                </p>
+              </div>
+            </div>
+            <div class="p-5 pt-0 border-t border-light-outline-variant/60 flex items-center justify-between mt-2">
+              <div>
+                <span class="text-label-xs text-light-outline block">السعر</span>
+                <span class="font-headline text-headline-sm text-forest-green font-bold">310 ر.س</span>
+              </div>
+              <a href="product-detail.html?id=jilbab-rehab" class="px-3.5 py-2 bg-forest-green hover:bg-forest-green/90 text-white rounded text-label-sm font-semibold transition-colors flex items-center gap-1">
+                <span>تحديد الطول</span>
+                <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+              </a>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- Pagination Restraint -->
+        <div class="pt-8 border-t border-light-outline-variant flex items-center justify-between text-label-sm text-light-outline">
+          <span>الصفحة 1 من 1 (6 قطع شرعية معتمدة)</span>
+          <div class="flex items-center gap-2">
+            <button class="px-3.5 py-1.5 rounded bg-forest-green text-white font-bold">1</button>
+            <button class="px-3.5 py-1.5 rounded bg-light-surface border border-light-outline-variant hover:bg-light-surface-container">2</button>
+            <button class="px-3 py-1.5 rounded bg-light-surface border border-light-outline-variant hover:bg-light-surface-container flex items-center gap-1">
+              <span>التالي</span>
+              <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="bg-light-surface-container-low border-t border-light-outline-variant pt-16 pb-12 text-light-on-surface">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
+      
+      <div class="lg:col-span-2 space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-soft-sage border border-light-outline-variant flex items-center justify-center text-forest-green">
+            <span class="material-symbols-outlined text-[24px]">spa</span>
+          </div>
+          <span class="font-headline text-headline-sm text-forest-green font-bold">وَقار وحَياء</span>
+        </div>
+        <p class="text-body-md text-light-outline leading-relaxed max-w-sm">
+          علامة متخصصة في الحجاب الشرعي الكامل، نسعى لتوفير أرقى الأقمشة الساترة غير الشفافة للأخوات المنتقبات والمختمرات بحرفية وعناية وأمانة تامة.
+        </p>
+        <div class="flex items-center gap-3 text-forest-green pt-2">
+          <div class="w-9 h-9 rounded-full bg-light-surface border border-light-outline-variant flex items-center justify-center">
+            <span class="material-symbols-outlined text-[18px]">verified</span>
+          </div>
+          <span class="text-label-sm font-semibold">موثق في منصة الأعمال السعودية • متصل بـ Firebase</span>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="font-title text-title-md text-forest-green mb-4 font-bold">أقسام المتجر</h4>
+        <ul class="space-y-2.5 text-body-sm text-light-outline">
+          <li><a href="products.html?cat=abaya" class="hover:text-forest-green transition-colors">عبايات الرأس الساترة</a></li>
+          <li><a href="products.html?cat=khimar" class="hover:text-forest-green transition-colors">أطقم الخمار الفرنسي</a></li>
+          <li><a href="products.html?cat=isdal" class="hover:text-forest-green transition-colors">إسدالات الصلاة القطنية</a></li>
+          <li><a href="products.html?cat=niqab" class="hover:text-forest-green transition-colors">النقابات الطبية والطبقات</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-title text-title-md text-forest-green mb-4 font-bold">ضمانات الستر</h4>
+        <ul class="space-y-2.5 text-body-sm text-light-outline">
+          <li><a href="index.html#coverage-fabric" class="hover:text-forest-green transition-colors">معايير فحص العتامة 100%</a></li>
+          <li><a href="product-detail.html#sizing-guide" class="hover:text-forest-green transition-colors">جدول قياس الأطوال (54-64)</a></li>
+          <li><a href="cart.html" class="hover:text-forest-green transition-colors">سياسة التغليف السري والكتوم</a></li>
+          <li><a href="#" class="hover:text-forest-green transition-colors">الاستبدال المجاني للمقاسات</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-title text-title-md text-forest-green mb-4 font-bold">خدمة الأخوات</h4>
+        <p class="text-body-sm text-light-outline mb-3">فريق استشاري نسائي متكامل للإجابة على كافة استفسارات الأطوال والأقمشة.</p>
+        <div class="space-y-2 text-label-sm font-semibold text-forest-green">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-[18px]">chat</span>
+            <span>واتساب نسائي مخصص: 966500000000+</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-[18px]">mail</span>
+            <span>hayaa@waqar-hayaa.com</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 pt-8 border-t border-light-outline-variant/60 flex flex-col sm:flex-row items-center justify-between text-label-sm text-light-outline gap-4">
+      <p>© 1448 هـ - جميع الحقوق محفوظة لمتجر وقار وحياء للأزياء الشرعية.</p>
+      
+      <!-- Payment Badges -->
+      <div class="flex flex-wrap items-center gap-3">
+        <span class="bg-light-surface px-2.5 py-1 rounded border border-light-outline-variant font-bold text-[12px] text-forest-green">مدى Mada</span>
+        <span class="bg-light-surface px-2.5 py-1 rounded border border-light-outline-variant font-bold text-[12px] text-forest-green">Apple Pay</span>
+        <span class="bg-light-surface px-2.5 py-1 rounded border border-light-outline-variant font-bold text-[12px] text-forest-green">Visa / Master</span>
+        <span class="bg-light-surface px-2.5 py-1 rounded border border-light-outline-variant font-bold text-[12px] text-forest-green">تمارا Tamara</span>
+        <span class="bg-light-surface px-2.5 py-1 rounded border border-light-outline-variant font-bold text-[12px] text-forest-green">تابي Tabby</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

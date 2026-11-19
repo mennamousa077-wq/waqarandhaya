@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 740" width="1000" height="740" direction="rtl">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&amp;display=swap');
+      text {
+        font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+      }
+    </style>
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#243E3E" />
+      <stop offset="50%" stop-color="#2F4F4F" />
+      <stop offset="100%" stop-color="#243E3E" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4AF37" />
+      <stop offset="100%" stop-color="#AA820A" />
+    </linearGradient>
+    <filter id="cardShadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#2F4F4F" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="1000" height="740" fill="#FAF8F5" rx="16"/>
+  <!-- Outer Luxury Border -->
+  <rect x="12" y="12" width="976" height="716" fill="none" stroke="#E2D9CC" stroke-width="4" rx="12"/>
+  <rect x="18" y="18" width="964" height="704" fill="none" stroke="#C5A059" stroke-width="1.5" rx="8"/>
+
+  <!-- Top Brand Header Banner -->
+  <g transform="translate(500, 48)">
+    <rect x="-160" y="-18" width="320" height="36" rx="18" fill="#2F4F4F" stroke="#C5A059" stroke-width="1.5"/>
+    <text text-anchor="middle" y="5" fill="#FAF8F5" font-size="14" font-weight="700" letter-spacing="1">وَقَارٌ وَحَيَاءْ — معايير الأطوال الشرعية</text>
+  </g>
+
+  <!-- Title & Subtitle -->
+  <text x="500" y="105" text-anchor="middle" fill="#2F4F4F" font-size="25" font-weight="800">جدول أطوال ساتر للقدمين <tspan fill="#C5A059">(مقاسات دقيقة بالسنتيمتر)</tspan></text>
+  <text x="500" y="132" text-anchor="middle" fill="#6B7280" font-size="14" font-weight="600">مُعاير بدقة لمنع انكشاف القدمين أو الكعبين عند الخطوة الواسعة والركوع، ودون جرّ على الأرض</text>
+
+  <!-- Table Container with Drop Shadow -->
+  <g filter="url(#cardShadow)">
+    <rect x="40" y="155" width="920" height="375" rx="10" fill="#FFFFFF" stroke="#D6CEBE" stroke-width="1.5"/>
+  </g>
+
+  <!-- Table Header -->
+  <path d="M 40 165 Q 40 155 50 155 L 950 155 Q 960 155 960 165 L 960 205 L 40 205 Z" fill="url(#headerGrad)"/>
+  <line x1="40" y1="205" x2="960" y2="205" stroke="#C5A059" stroke-width="2.5"/>
+
+  <!-- Header Columns (RTL) -->
+  <text x="870" y="186" text-anchor="middle" fill="#FAF8F5" font-size="14" font-weight="700">طول القامة (سم)</text>
+  <text x="745" y="186" text-anchor="middle" fill="#FAF8F5" font-size="14" font-weight="700">المقاس بالإنش</text>
+  <text x="615" y="186" text-anchor="middle" fill="#FAF8F5" font-size="14" font-weight="700">طول عباءة الكتف</text>
+  <text x="475" y="186" text-anchor="middle" fill="#FAF8F5" font-size="14" font-weight="700">طول عباءة الرأس</text>
+  <text x="295" y="186" text-anchor="middle" fill="#FAF8F5" font-size="14" font-weight="700">مستوى ستر القدم عند الخطوة</text>
+  <text x="105" y="186" text-anchor="middle" fill="#FAF8F5" font-size="14" font-weight="700">معيار الحذاء والستر</text>
+
+  <!-- Table Rows -->
+  <!-- Row 1 -->
+  <rect x="40" y="205" width="920" height="54" fill="#FFFFFF"/>
+  <line x1="40" y1="259" x2="960" y2="259" stroke="#EFEAE3" stroke-width="1"/>
+  <text x="870" y="238" text-anchor="middle" fill="#374151" font-size="14" font-weight="600">148 – 152 سم</text>
+  <rect x="715" y="217" width="60" height="28" rx="6" fill="#E8F0EE" stroke="#C1D5D0"/>
+  <text x="745" y="236" text-anchor="middle" fill="#2F4F4F" font-size="13" font-weight="700">50 / 52</text>
+  <text x="615" y="238" text-anchor="middle" fill="#2F4F4F" font-size="14" font-weight="700">130 – 133 سم</text>
+  <text x="475" y="238" text-anchor="middle" fill="#C5A059" font-size="14" font-weight="800">145 – 148 سم</text>
+  <rect x="205" y="218" width="180" height="26" rx="4" fill="#F4EFE6"/>
+  <text x="295" y="235" text-anchor="middle" fill="#2F4F4F" font-size="12.5" font-weight="700">✓ يستر الكعبين بالكامل</text>
+  <text x="105" y="237" text-anchor="middle" fill="#6B7280" font-size="12">يلامس مشط القدم مع نعل واطئ</text>
+
+  <!-- Row 2 -->
+  <rect x="40" y="259" width="920" height="54" fill="#FAF7F2"/>
+  <line x1="40" y1="313" x2="960" y2="313" stroke="#EFEAE3" stroke-width="1"/>
+  <text x="870" y="292" text-anchor="middle" fill="#374151" font-size="14" font-weight="600">153 – 157 سم</text>
+  <rect x="720" y="271" width="50" height="28" rx="6" fill="#E8F0EE" stroke="#C1D5D0"/>
+  <text x="745" y="290" text-anchor="middle" fill="#2F4F4F" font-size="13" font-weight="700">54</text>
+  <text x="615" y="292" text-anchor="middle" fill="#2F4F4F" font-size="14" font-weight="700">135 – 138 سم</text>
+  <text x="475" y="292" text-anchor="middle" fill="#C5A059" font-size="14" font-weight="800">150 – 153 سم</text>
+  <rect x="200" y="272" width="190" height="26" rx="4" fill="#F4EFE6"/>
+  <text x="295" y="289" text-anchor="middle" fill="#2F4F4F" font-size="12.5" font-weight="700">✓ سابغ ولا ينكشف عند المشي</text>
+  <text x="105" y="291" text-anchor="middle" fill="#6B7280" font-size="12">ارتفاع 1.5 سم عن الأرض (أمان)</text>
+
+  <!-- Row 3 -->
+  <rect x="40" y="313" width="920" height="54" fill="#FFFFFF"/>
+  <line x1="40" y1="367" x2="960" y2="367" stroke="#EFEAE3" stroke-width="1"/>
+  <text x="870" y="346" text-anchor="middle" fill="#374151" font-size="14" font-weight="600">158 – 162 سم</text>
+  <rect x="720" y="325" width="50" height="28" rx="6" fill="#E8F0EE" stroke="#C1D5D0"/>
+  <text x="745" y="344" text-anchor="middle" fill="#2F4F4F" font-size="13" font-weight="700">56</text>
+  <text x="615" y="346" text-anchor="middle" fill="#2F4F4F" font-size="14" font-weight="700">140 – 143 سم</text>
+  <text x="475" y="346" text-anchor="middle" fill="#C5A059" font-size="14" font-weight="800">155 – 158 سم</text>
+  <rect x="205" y="326" width="180" height="26" rx="4" fill="#F4EFE6"/>
+  <text x="295" y="343" text-anchor="middle" fill="#2F4F4F" font-size="12.5" font-weight="700">✓ يغطي كامل عظم الكعب</text>
+  <text x="105" y="345" text-anchor="middle" fill="#6B7280" font-size="12">انسياب وقور لا يجمع الغبار</text>
+
+  <!-- Row 4 -->
+  <rect x="40" y="367" width="920" height="54" fill="#FAF7F2"/>
+  <line x1="40" y1="421" x2="960" y2="421" stroke="#EFEAE3" stroke-width="1"/>
+  <text x="870" y="400" text-anchor="middle" fill="#374151" font-size="14" font-weight="600">163 – 167 سم</text>
+  <rect x="720" y="379" width="50" height="28" rx="6" fill="#E8F0EE" stroke="#C1D5D0"/>
+  <text x="745" y="398" text-anchor="middle" fill="#2F4F4F" font-size="13" font-weight="700">58</text>
+  <text x="615" y="400" text-anchor="middle" fill="#2F4F4F" font-size="14" font-weight="700">145 – 148 سم</text>
+  <text x="475" y="400" text-anchor="middle" fill="#C5A059" font-size="14" font-weight="800">160 – 163 سم</text>
+  <rect x="195" y="380" width="200" height="26" rx="4" fill="#F4EFE6"/>
+  <text x="295" y="397" text-anchor="middle" fill="#2F4F4F" font-size="12.5" font-weight="700">✓ ساتر في الركوع والسجود</text>
+  <text x="105" y="399" text-anchor="middle" fill="#6B7280" font-size="12">حساب هبوط الثوب عند الانحناء</text>
+
+  <!-- Row 5 -->
+  <rect x="40" y="421" width="920" height="54" fill="#FFFFFF"/>
+  <line x1="40" y1="475" x2="960" y2="475" stroke="#EFEAE3" stroke-width="1"/>
+  <text x="870" y="454" text-anchor="middle" fill="#374151" font-size="14" font-weight="600">168 – 173 سم</text>
+  <rect x="720" y="433" width="50" height="28" rx="6" fill="#E8F0EE" stroke="#C1D5D0"/>
+  <text x="745" y="452" text-anchor="middle" fill="#2F4F4F" font-size="13" font-weight="700">60</text>
+  <text x="615" y="454" text-anchor="middle" fill="#2F4F4F" font-size="14" font-weight="700">150 – 153 سم</text>
+  <text x="475" y="454" text-anchor="middle" fill="#C5A059" font-size="14" font-weight="800">165 – 168 سم</text>
+  <rect x="190" y="434" width="210" height="26" rx="4" fill="#F4EFE6"/>
+  <text x="295" y="451" text-anchor="middle" fill="#2F4F4F" font-size="12.5" font-weight="700">✓ حشمة كاملة للأخوات الطويلات</text>
+  <text x="105" y="453" text-anchor="middle" fill="#6B7280" font-size="12">تغطية سابغة مع اتساع 190 سم</text>
+
+  <!-- Row 6 -->
+  <rect x="40" y="475" width="920" height="55" fill="#FAF7F2" rx="0 0 10 10"/>
+  <text x="870" y="508" text-anchor="middle" fill="#374151" font-size="14" font-weight="600">174 – 180 سم</text>
+  <rect x="715" y="487" width="60" height="28" rx="6" fill="#E8F0EE" stroke="#C1D5D0"/>
+  <text x="745" y="506" text-anchor="middle" fill="#2F4F4F" font-size="13" font-weight="700">62 / 64</text>
+  <text x="615" y="508" text-anchor="middle" fill="#2F4F4F" font-size="14" font-weight="700">155 – 160 سم</text>
+  <text x="475" y="508" text-anchor="middle" fill="#C5A059" font-size="14" font-weight="800">170 – 175 سم</text>
+  <rect x="195" y="488" width="200" height="26" rx="4" fill="#F4EFE6"/>
+  <text x="295" y="505" text-anchor="middle" fill="#2F4F4F" font-size="12.5" font-weight="700">✓ مقاس ملكي خاص ساتر للقدمين</text>
+  <text x="105" y="507" text-anchor="middle" fill="#6B7280" font-size="12">ستر ممتد حتى أخمص القدمين</text>
+
+  <!-- Bottom 3 Feature Guarantee Cards -->
+  <g transform="translate(40, 555)">
+    <!-- Card 1 -->
+    <rect x="620" y="0" width="300" height="135" rx="10" fill="#FFFFFF" stroke="#E2D9CC" stroke-width="1.2" filter="url(#cardShadow)"/>
+    <rect x="912" y="0" width="8" height="135" rx="4" fill="#C5A059"/>
+    <text x="895" y="32" fill="#2F4F4F" font-size="15" font-weight="700">قاعدة قياس عباءة الرأس:</text>
+    <text x="895" y="60" fill="#6B7280" font-size="12.5" font-weight="500">تبدأ من قمة الرأس بدلاً من الكتف،</text>
+    <text x="895" y="82" fill="#6B7280" font-size="12.5" font-weight="500">لذا يزيد طولها من 12 إلى 15 سم</text>
+    <text x="895" y="104" fill="#2F4F4F" font-size="12.5" font-weight="700">لتضمن ستر القدمين بالكامل عند المشي.</text>
+
+    <!-- Card 2 -->
+    <rect x="310" y="0" width="300" height="135" rx="10" fill="#FFFFFF" stroke="#E2D9CC" stroke-width="1.2" filter="url(#cardShadow)"/>
+    <rect x="602" y="0" width="8" height="135" rx="4" fill="#2F4F4F"/>
+    <text x="585" y="32" fill="#2F4F4F" font-size="15" font-weight="700">حساب الخطوة والركوع:</text>
+    <text x="585" y="60" fill="#6B7280" font-size="12.5" font-weight="500">تمت إضافة 3 إلى 5 سم احترازية محسوبة</text>
+    <text x="585" y="82" fill="#6B7280" font-size="12.5" font-weight="500">حتى لا يرتفع طرف الثوب للأعلى أثناء</text>
+    <text x="585" y="104" fill="#2F4F4F" font-size="12.5" font-weight="700">صعود الدرج أو المشي السريع والركوع.</text>
+
+    <!-- Card 3 -->
+    <rect x="0" y="0" width="300" height="135" rx="10" fill="#FFFFFF" stroke="#E2D9CC" stroke-width="1.2" filter="url(#cardShadow)"/>
+    <rect x="292" y="0" width="8" height="135" rx="4" fill="#C5A059"/>
+    <text x="275" y="32" fill="#2F4F4F" font-size="15" font-weight="700">ضمان الاستبدال المجاني:</text>
+    <text x="275" y="60" fill="#6B7280" font-size="12.5" font-weight="500">إذا وصلكِ الطول غير مناسب لذوقكِ</text>
+    <text x="275" y="82" fill="#6B7280" font-size="12.5" font-weight="500">أو كان أطول/أقصر مما تفضلين،</text>
+    <text x="275" y="104" fill="#2F4F4F" font-size="12.5" font-weight="700">استبدال فوري مجاني حتى باب منزلكِ.</text>
+  </g>
+</svg>
