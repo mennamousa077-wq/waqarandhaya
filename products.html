@@ -159,7 +159,7 @@
       </div>
       <div class="mx-auto flex items-center gap-3">
         <span class="bg-champagne-gold/20 text-champagne-gold px-2 py-0.5 rounded text-[11px] font-semibold">خدمة مخصصة</span>
-        <span>شحن مغلّف وسري مجاني للطلبات فوق 350 ر.س | استبدال فوري للمقاسات</span>
+        <span>شحن مغلّف وسري مجاني للطلبات فوق 350 ج.م | استبدال فوري للمقاسات</span>
       </div>
       <div class="hidden md:flex items-center gap-4 text-light-on-primary/80">
         <button type="button" onclick="openWaqarSizingModal()" class="hover:text-white cursor-pointer transition-colors">مساعدة القياس الشرعي</button>
@@ -191,13 +191,13 @@
         <a href="products.html?cat=khimar" class="text-light-on-surface hover:text-forest-green transition-colors">أطقم الخمار (قطعتين و 3)</a>
         <a href="products.html?cat=isdal" class="text-light-on-surface hover:text-forest-green transition-colors">إسدالات الصلاة الواسعة</a>
         <a href="products.html?cat=niqab" class="text-light-on-surface hover:text-forest-green transition-colors">تشكيلة النقابات الطبية</a>
-        <a href="index.html#coverage-fabric" class="text-light-on-surface hover:text-forest-green transition-colors">دليل الأقمشة والعتامة</a>
+        <a href="fabrics.html" class="text-light-on-surface hover:text-forest-green transition-colors">دليل الأقمشة والعتامة</a>
       </nav>
 
       <!-- Search & User Actions -->
       <div class="flex items-center gap-4">
         <div class="relative hidden sm:block w-64 xl:w-72">
-          <input type="search" placeholder="بحث: كريب سعودي، خمار فرنسي..." class="w-full bg-light-surface-container-low border border-light-outline-variant rounded-full pr-10 pl-4 py-2 text-body-md placeholder:text-light-outline focus:outline-none focus:border-forest-green focus:ring-1 focus:ring-forest-green text-right">
+          <input type="search" placeholder="بحث: كريب ملكي، خمار فرنسي..." class="w-full bg-light-surface-container-low border border-light-outline-variant rounded-full pr-10 pl-4 py-2 text-body-md placeholder:text-light-outline focus:outline-none focus:border-forest-green focus:ring-1 focus:ring-forest-green text-right">
           <span class="material-symbols-outlined absolute right-3 top-2.5 text-light-outline text-[20px]">search</span>
         </div>
 
@@ -387,7 +387,7 @@
           <p class="text-body-sm text-light-outline leading-relaxed">
             إذا استلمتِ أي قطعة وثبتت شفافيتها أو عدم ملاءمة طولها للستر الشرعي، نستبدلها لكِ فوراً على حسابنا مع شحن مجاني.
           </p>
-          <img src="images/opacity-test.jpg" alt="معتمد مخبرياً" class="rounded-lg h-24 w-full object-cover">
+          <img src="images/opacity-sun-test.jpg" onerror="this.src='images/fabric-heavy-crepe.webp'" alt="معتمد مخبرياً" class="rounded-lg h-24 w-full object-cover">
         </div>
 
       </aside>
@@ -421,7 +421,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
           
           <!-- Card 1 (Royal Head Abaya) -->
-          <article class="bg-light-surface-container-low rounded-xl border border-light-outline-variant overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between">
+          <article class="bg-light-surface-container-low rounded-xl border border-light-outline-variant overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between" data-cat="abaya">
             <div>
               <div class="relative aspect-[3/4] overflow-hidden bg-warm-taupe/20">
                 <img src="images/abaya-sakina-royal.jpg" alt="طقم «سكينة» الملكي: عباءة رأس وخمار مدمج كريب صالونة" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
@@ -449,7 +449,7 @@
             <div class="p-5 pt-0 border-t border-light-outline-variant/60 flex items-center justify-between mt-2">
               <div>
                 <span class="text-label-xs text-light-outline block">السعر</span>
-                <span class="font-headline text-headline-sm text-forest-green font-bold">340 ر.س</span>
+                <span class="font-headline text-headline-sm text-forest-green font-bold">340 ج.م</span>
               </div>
               <a href="product-detail.html?id=royal-head-abaya-sakina" class="px-3.5 py-2 bg-forest-green hover:bg-forest-green/90 text-white rounded text-label-sm font-semibold transition-colors flex items-center gap-1">
                 <span>تحديد الطول</span>
@@ -459,7 +459,7 @@
           </article>
 
           <!-- Card 2 (French Khimar Set) -->
-          <article class="bg-light-surface-container-low rounded-xl border border-light-outline-variant overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between">
+          <article class="bg-light-surface-container-low rounded-xl border border-light-outline-variant overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between" data-cat="khimar">
             <div>
               <div class="relative aspect-[3/4] overflow-hidden bg-warm-taupe/20">
                 <img src="images/khimar-afaf-mocha.webp" alt="طقم الخمار الفرنسي «عَفاف» قطعتين (لون الموكا الدافئ)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
@@ -487,7 +487,7 @@
             <div class="p-5 pt-0 border-t border-light-outline-variant/60 flex items-center justify-between mt-2">
               <div>
                 <span class="text-label-xs text-light-outline block">السعر</span>
-                <span class="font-headline text-headline-sm text-forest-green font-bold">295 ر.س</span>
+                <span class="font-headline text-headline-sm text-forest-green font-bold">295 ج.م</span>
               </div>
               <a href="product-detail.html?id=french-khimar-afaf" class="px-3.5 py-2 bg-forest-green hover:bg-forest-green/90 text-white rounded text-label-sm font-semibold transition-colors flex items-center gap-1">
                 <span>تحديد الطول</span>
@@ -497,7 +497,7 @@
           </article>
 
           <!-- Card 3 (Prayer Dress) -->
-          <article class="bg-light-surface-container-low rounded-xl border border-light-outline-variant overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between">
+          <article class="bg-light-surface-container-low rounded-xl border border-light-outline-variant overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between" data-cat="isdal">
             <div>
               <div class="relative aspect-[3/4] overflow-hidden bg-warm-taupe/20">
                 <img src="images/isdal-salat-wasi.webp" alt="إسدالات الصلاة الواسعة" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
@@ -525,7 +525,7 @@
             <div class="p-5 pt-0 border-t border-light-outline-variant/60 flex items-center justify-between mt-2">
               <div>
                 <span class="text-label-xs text-light-outline block">السعر</span>
-                <span class="font-headline text-headline-sm text-forest-green font-bold">185 ر.س</span>
+                <span class="font-headline text-headline-sm text-forest-green font-bold">185 ج.م</span>
               </div>
               <a href="product-detail.html?id=prayer-dress-mihrab" class="px-3.5 py-2 bg-forest-green hover:bg-forest-green/90 text-white rounded text-label-sm font-semibold transition-colors flex items-center gap-1">
                 <span>تحديد الطول</span>
@@ -535,25 +535,25 @@
           </article>
 
           <!-- Card 4 (Niqab Set Bundle) -->
-          <article class="bg-light-surface-container-low rounded-xl border border-light-outline-variant overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between">
+          <article class="bg-light-surface-container-low rounded-xl border border-light-outline-variant overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between" data-cat="niqab">
             <div>
               <div class="relative aspect-[3/4] overflow-hidden bg-warm-taupe/20">
-                <img src="images/niqab-amira-trio.webp" alt="نقابات مائلة وطبقات متعددة وخيط عين ناعم" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                <img src="images/niqab-amira-trio.webp" alt="باقة نقابات حشمة الطبية الثلاثية" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                 <div class="absolute top-3 right-3 bg-champagne-gold text-forest-green text-[11px] font-label px-2.5 py-1 rounded-full flex items-center gap-1 font-bold">
                   <span class="material-symbols-outlined text-[13px]">air</span>
                   <span>تنفس سهل وطبي</span>
                 </div>
                 <div class="absolute bottom-3 left-3 bg-light-surface/90 text-forest-green text-[11px] font-mono px-2 py-0.5 rounded font-bold">
-                  طقم 3 نقابات
+                  طقم 3 نقابات طبية
                 </div>
               </div>
               <div class="p-5">
                 <div class="flex items-center justify-between text-label-xs text-light-outline mb-1.5">
-                  <span>النقابات والبراقع</span>
+                  <span>تشكيلة النقابات الطبية</span>
                   <span class="text-champagne-gold font-semibold">شيفون كوري درجة أولى</span>
                 </div>
                 <h3 class="font-title text-title-md text-light-on-surface group-hover:text-forest-green transition-colors mb-2">
-                  <a href="product-detail.html?id=niqab-trio-pack">باقة نقابات «حشمة» الثلاثية (مائل، طبقتين، وخيط عين)</a>
+                  <a href="product-detail.html?id=niqab-trio-pack">نقاب «الأميرة» الطبي الفاخر وباقة نقابات «حشمة» الثلاثية</a>
                 </h3>
                 <p class="text-body-sm text-light-outline line-clamp-2">
                   أربطة مريحة لا تضغط على الرأس، خيط وسط ناعم لا يؤذي الأعين ومصممة لارتداء مريح مع النظارات الطبية.
@@ -563,7 +563,7 @@
             <div class="p-5 pt-0 border-t border-light-outline-variant/60 flex items-center justify-between mt-2">
               <div>
                 <span class="text-label-xs text-light-outline block">السعر</span>
-                <span class="font-headline text-headline-sm text-forest-green font-bold">145 ر.س</span>
+                <span class="font-headline text-headline-sm text-forest-green font-bold">145 ج.م</span>
               </div>
               <a href="product-detail.html?id=niqab-trio-pack" class="px-3.5 py-2 bg-forest-green hover:bg-forest-green/90 text-white rounded text-label-sm font-semibold transition-colors flex items-center gap-1">
                 <span>عرض الباقة</span>
@@ -572,8 +572,84 @@
             </div>
           </article>
 
+          <!-- Card 4B (Medical Slanted Niqab) -->
+          <article class="bg-light-surface-container-low rounded-xl border border-light-outline-variant overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between" data-cat="niqab">
+            <div>
+              <div class="relative aspect-[3/4] overflow-hidden bg-warm-taupe/20">
+                <img src="images/niqab-medical-slanted.jpg" onerror="this.src='images/niqab-amira-trio.webp'" alt="النقاب الطبي المائل تنفس بخيط عين ناعم" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                <div class="absolute top-3 right-3 bg-forest-green/95 text-white text-[11px] font-label px-2.5 py-1 rounded-full flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[13px] text-champagne-gold">verified</span>
+                  <span>نقاب طبي مسامي</span>
+                </div>
+                <div class="absolute bottom-3 left-3 bg-light-surface/90 text-forest-green text-[11px] font-mono px-2 py-0.5 rounded font-bold">
+                  خيط عين قطني ناعم
+                </div>
+              </div>
+              <div class="p-5">
+                <div class="flex items-center justify-between text-label-xs text-light-outline mb-1.5">
+                  <span>تشكيلة النقابات الطبية</span>
+                  <span class="text-champagne-gold font-semibold">شيفون كوري بارد</span>
+                </div>
+                <h3 class="font-title text-title-md text-light-on-surface group-hover:text-forest-green transition-colors mb-2">
+                  <a href="product-detail.html?id=niqab-medical-slanted">النقاب الطبي المائل «تَنفّس» بخيط عين ناعم ومسامات هوائية</a>
+                </h3>
+                <p class="text-body-sm text-light-outline line-clamp-2">
+                  قصة مائلة تمنع ملامسة القماش للأنف والفم لراحة التنفس الطويل في العمل والجامعة مع مطاط جانبي مخفي.
+                </p>
+              </div>
+            </div>
+            <div class="p-5 pt-0 border-t border-light-outline-variant/60 flex items-center justify-between mt-2">
+              <div>
+                <span class="text-label-xs text-light-outline block">السعر</span>
+                <span class="font-headline text-headline-sm text-forest-green font-bold">55 ج.م</span>
+              </div>
+              <a href="product-detail.html?id=niqab-medical-slanted" class="px-3.5 py-2 bg-forest-green hover:bg-forest-green/90 text-white rounded text-label-sm font-semibold transition-colors flex items-center gap-1">
+                <span>تحديد المقاس</span>
+                <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Card 4C (Medical Eyeglasses Niqab) -->
+          <article class="bg-light-surface-container-low rounded-xl border border-light-outline-variant overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between" data-cat="niqab">
+            <div>
+              <div class="relative aspect-[3/4] overflow-hidden bg-warm-taupe/20">
+                <img src="images/niqab-medical-glasses.jpg" onerror="this.src='images/niqab-amira-trio.webp'" alt="نقاب بصيرة الطبي المخصص للنظارات" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                <div class="absolute top-3 right-3 bg-mocha-brown/95 text-white text-[11px] font-label px-2.5 py-1 rounded-full flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[13px] text-champagne-gold">visibility</span>
+                  <span>مخصص للنظارات الطبية</span>
+                </div>
+                <div class="absolute bottom-3 left-3 bg-light-surface/90 text-forest-green text-[11px] font-mono px-2 py-0.5 rounded font-bold">
+                  مانع لضباب العدسات
+                </div>
+              </div>
+              <div class="p-5">
+                <div class="flex items-center justify-between text-label-xs text-light-outline mb-1.5">
+                  <span>تشكيلة النقابات الطبية</span>
+                  <span class="text-champagne-gold font-semibold">جبهة قطن طبي + شيفون</span>
+                </div>
+                <h3 class="font-title text-title-md text-light-on-surface group-hover:text-forest-green transition-colors mb-2">
+                  <a href="product-detail.html?id=niqab-medical-glasses">نقاب «بَصيرة» الطبي المخصص للنظارات بأربطة قطنية عريضة</a>
+                </h3>
+                <p class="text-body-sm text-light-outline line-clamp-2">
+                  يمنع تكون البخار على عدسات النظارة الطبية مع ربطة خلفية قطنية عريضة تثبت النظارة دون ضغط على الأذنين.
+                </p>
+              </div>
+            </div>
+            <div class="p-5 pt-0 border-t border-light-outline-variant/60 flex items-center justify-between mt-2">
+              <div>
+                <span class="text-label-xs text-light-outline block">السعر</span>
+                <span class="font-headline text-headline-sm text-forest-green font-bold">60 ج.م</span>
+              </div>
+              <a href="product-detail.html?id=niqab-medical-glasses" class="px-3.5 py-2 bg-forest-green hover:bg-forest-green/90 text-white rounded text-label-sm font-semibold transition-colors flex items-center gap-1">
+                <span>تحديد المقاس</span>
+                <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+              </a>
+            </div>
+          </article>
+
           <!-- Card 5 (Shoulder Wide Cut Abaya) -->
-          <article class="bg-light-surface-container-low rounded-xl border border-light-outline-variant overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between">
+          <article class="bg-light-surface-container-low rounded-xl border border-light-outline-variant overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between" data-cat="abaya">
             <div>
               <div class="relative aspect-[3/4] overflow-hidden bg-warm-taupe/20">
                 <img src="images/bisht-mahaba-fasih.webp" alt="بشت «مَهابة» الفسيح بقصة مغلقة بالكامل وأزرار مخفية" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
@@ -601,7 +677,7 @@
             <div class="p-5 pt-0 border-t border-light-outline-variant/60 flex items-center justify-between mt-2">
               <div>
                 <span class="text-label-xs text-light-outline block">السعر</span>
-                <span class="font-headline text-headline-sm text-forest-green font-bold">365 ر.س</span>
+                <span class="font-headline text-headline-sm text-forest-green font-bold">365 ج.م</span>
               </div>
               <a href="product-detail.html?id=shoulder-abaya-mahaba" class="px-3.5 py-2 bg-forest-green hover:bg-forest-green/90 text-white rounded text-label-sm font-semibold transition-colors flex items-center gap-1">
                 <span>تحديد الطول</span>
@@ -611,7 +687,7 @@
           </article>
 
           <!-- Card 6 (Jilbab 2-Piece) -->
-          <article class="bg-light-surface-container-low rounded-xl border border-light-outline-variant overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between">
+          <article class="bg-light-surface-container-low rounded-xl border border-light-outline-variant overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between" data-cat="jilbab">
             <div>
               <div class="relative aspect-[3/4] overflow-hidden bg-warm-taupe/20">
                 <img src="images/jilbab-rehab-two-piece.webp" alt="طقم جلباب «رِحاب» قطعتين مع تنورة كلوش فسيحة" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
@@ -639,7 +715,7 @@
             <div class="p-5 pt-0 border-t border-light-outline-variant/60 flex items-center justify-between mt-2">
               <div>
                 <span class="text-label-xs text-light-outline block">السعر</span>
-                <span class="font-headline text-headline-sm text-forest-green font-bold">310 ر.س</span>
+                <span class="font-headline text-headline-sm text-forest-green font-bold">310 ج.م</span>
               </div>
               <a href="product-detail.html?id=jilbab-rehab" class="px-3.5 py-2 bg-forest-green hover:bg-forest-green/90 text-white rounded text-label-sm font-semibold transition-colors flex items-center gap-1">
                 <span>تحديد الطول</span>
@@ -686,7 +762,7 @@
           <div class="w-9 h-9 rounded-full bg-light-surface border border-light-outline-variant flex items-center justify-center">
             <span class="material-symbols-outlined text-[18px]">verified</span>
           </div>
-          <span class="text-label-sm font-semibold">موثق في منصة الأعمال السعودية • متصل بـ Firebase</span>
+          <span class="text-label-sm font-semibold">متجر معتمد في مصر • متصل بـ Firebase</span>
         </div>
       </div>
 
@@ -703,7 +779,7 @@
       <div>
         <h4 class="font-title text-title-md text-forest-green mb-4 font-bold">ضمانات الستر</h4>
         <ul class="space-y-2.5 text-body-sm text-light-outline">
-          <li><a href="index.html#coverage-fabric" class="hover:text-forest-green transition-colors">معايير فحص العتامة 100%</a></li>
+          <li><a href="fabrics.html" class="hover:text-forest-green transition-colors">دليل الأقمشة ومعايير العتامة 100%</a></li>
           <li><a href="product-detail.html#sizing-guide" class="hover:text-forest-green transition-colors">جدول قياس الأطوال (54-64)</a></li>
           <li><a href="cart.html" class="hover:text-forest-green transition-colors">سياسة التغليف السري والكتوم</a></li>
           <li><a href="#" class="hover:text-forest-green transition-colors">الاستبدال المجاني للمقاسات</a></li>
@@ -716,7 +792,7 @@
         <div class="space-y-2 text-label-sm font-semibold text-forest-green">
           <div class="flex items-center gap-2">
             <span class="material-symbols-outlined text-[18px]">chat</span>
-            <span>واتساب نسائي مخصص: 966500000000+</span>
+            <a href="https://wa.me/201092298237" target="_blank" class="hover:underline">واتساب نسائي مخصص: 01092298237</a>
           </div>
           <div class="flex items-center gap-2">
             <span class="material-symbols-outlined text-[18px]">mail</span>
@@ -732,11 +808,10 @@
       
       <!-- Payment Badges -->
       <div class="flex flex-wrap items-center gap-3">
-        <span class="bg-light-surface px-2.5 py-1 rounded border border-light-outline-variant font-bold text-[12px] text-forest-green">مدى Mada</span>
-        <span class="bg-light-surface px-2.5 py-1 rounded border border-light-outline-variant font-bold text-[12px] text-forest-green">Apple Pay</span>
-        <span class="bg-light-surface px-2.5 py-1 rounded border border-light-outline-variant font-bold text-[12px] text-forest-green">Visa / Master</span>
-        <span class="bg-light-surface px-2.5 py-1 rounded border border-light-outline-variant font-bold text-[12px] text-forest-green">تمارا Tamara</span>
-        <span class="bg-light-surface px-2.5 py-1 rounded border border-light-outline-variant font-bold text-[12px] text-forest-green">تابي Tabby</span>
+        <span class="bg-light-surface px-2.5 py-1 rounded border border-light-outline-variant font-bold text-[12px] text-forest-green">إنستا باي InstaPay</span>
+        <span class="bg-light-surface px-2.5 py-1 rounded border border-light-outline-variant font-bold text-[12px] text-forest-green">فودافون كاش Vodafone Cash</span>
+        <span class="bg-light-surface px-2.5 py-1 rounded border border-light-outline-variant font-bold text-[12px] text-forest-green">بطاقة ائتمانية / فيزا Visa</span>
+        <span class="bg-light-surface px-2.5 py-1 rounded border border-light-outline-variant font-bold text-[12px] text-forest-green">الدفع عند الاستلام</span>
       </div>
     </div>
   </footer>

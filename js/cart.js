@@ -96,7 +96,7 @@
       window.WaqarFirebase.logEvent('add_to_cart', {
         item_name: item.title,
         value: item.price,
-        currency: 'SAR'
+        currency: 'EGP'
       });
     }
 
@@ -125,7 +125,7 @@
         window.WaqarFirebase.logEvent('remove_from_cart', {
           item_name: removed.title,
           value: removed.price,
-          currency: 'SAR'
+          currency: 'EGP'
         });
       }
     }
@@ -148,21 +148,26 @@
 
   function applyCoupon(code) {
     const cleanCode = (code || '').trim().toUpperCase();
-    if (!cleanCode) return { success: false, message: 'يرجى كتابة رمز الكوبون' };
+    if (!cleanCode) return { success: false, message: 'يرجى كتابة رمز الإهداء أو كود الخصم' };
 
     if (cleanCode === 'WAQAR10' || cleanCode === 'BARAKA') {
-      const coupon = { code: cleanCode, discountPercent: 10, label: 'خصم وقار 10%' };
+      const coupon = { code: cleanCode, discountPercent: 10, fixedDiscount: 0, label: `كود الخصم (${cleanCode} - 10%)` };
       localStorage.setItem(COUPON_STORAGE_KEY, JSON.stringify(coupon));
       window.dispatchEvent(new CustomEvent('waqar-cart-updated'));
-      return { success: true, message: 'تم تطبيق الكوبون بنجاح (خصم 10%)' };
+      return { success: true, coupon, message: `تم تطبيق كود ${cleanCode} بنجاح (خصم 10% إضافي)` };
     } else if (cleanCode === 'HAYAA15') {
-      const coupon = { code: cleanCode, discountPercent: 15, label: 'خصم حياء 15%' };
+      const coupon = { code: cleanCode, discountPercent: 15, fixedDiscount: 0, label: 'كود الخصم (HAYAA15 - 15%)' };
       localStorage.setItem(COUPON_STORAGE_KEY, JSON.stringify(coupon));
       window.dispatchEvent(new CustomEvent('waqar-cart-updated'));
-      return { success: true, message: 'تم تطبيق الكوبون بنجاح (خصم 15%)' };
+      return { success: true, coupon, message: 'تم تطبيق كود HAYAA15 بنجاح (خصم 15% إضافي)' };
+    } else if (cleanCode === 'GIFT50') {
+      const coupon = { code: 'GIFT50', discountPercent: 0, fixedDiscount: 50, label: 'رمز إهداء (GIFT50 - 50 ج.م)' };
+      localStorage.setItem(COUPON_STORAGE_KEY, JSON.stringify(coupon));
+      window.dispatchEvent(new CustomEvent('waqar-cart-updated'));
+      return { success: true, coupon, message: 'تم تفعيل رمز الإهداء GIFT50 بنجاح (خصم 50 ج.م)' };
     }
 
-    return { success: false, message: 'عذراً، هذا الكوبون غير صالح أو منتهي الصلاحية' };
+    return { success: false, message: 'عذراً، هذا الرمز غير صالح — جربي WAQAR10 أو HAYAA15 أو GIFT50' };
   }
 
   function removeCoupon() {
@@ -181,16 +186,20 @@
       bundleDiscount = Math.round(subtotal * 0.10 * 100) / 100;
     }
 
-    // كود الخصم الإضافي إن وجد
+    // كود الخصم أو رمز الإهداء الإضافي إن وجد
     const coupon = getAppliedCoupon();
     let couponDiscount = 0;
-    if (coupon && coupon.discountPercent) {
-      couponDiscount = Math.round((subtotal - bundleDiscount) * (coupon.discountPercent / 100) * 100) / 100;
+    if (coupon && subtotal > 0) {
+      if (coupon.discountPercent) {
+        couponDiscount = Math.round((subtotal - bundleDiscount) * (coupon.discountPercent / 100) * 100) / 100;
+      } else if (coupon.fixedDiscount) {
+        couponDiscount = Math.min(subtotal - bundleDiscount, coupon.fixedDiscount);
+      }
     }
 
     const totalDiscount = bundleDiscount + couponDiscount;
 
-    // شحن مجاني للطلبات فوق 350 ر.س
+    // شحن مجاني للطلبات فوق 350 ج.م
     const shippingFee = (subtotal - totalDiscount >= 350 || subtotal === 0) ? 0 : 35;
 
     const finalTotal = Math.max(0, Math.round((subtotal - totalDiscount + shippingFee) * 100) / 100);

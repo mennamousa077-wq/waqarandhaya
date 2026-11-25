@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>دليل الأقمشة والعتامة الشرعية — وقار وحياء</title>
+  
+  <!-- Tailwind CSS & Configuration -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    globalThis.tailwind = globalThis.tailwind || {};
+    globalThis.tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'champagne-gold': '#C5A880',
+            'soft-sage': '#E2E8DF',
+            'warm-taupe': '#D8CEC4',
+            'mocha-brown': '#5C4033',
+            'forest-green': '#2F4F4F',
+            'light-primary': '#2F4F4F',
+            'light-on-primary': '#FFFFFF',
+            'light-secondary': '#5C4033',
+            'light-on-secondary': '#FFFFFF',
+            'light-surface': '#FAF8F5',
+            'light-on-surface': '#2C2A29',
+            'light-surface-container-low': '#F4EFEA',
+            'light-surface-container': '#EAE3DC',
+            'light-surface-container-high': '#E2D9D0',
+            'light-outline': '#A3978B',
+            'light-outline-variant': '#D8CEC4',
+            'light-accent': '#C5A880',
+            'light-on-accent': '#2C2A29',
+          },
+          borderRadius: {
+            'sm': '6px',
+            'DEFAULT': '10px',
+            'md': '14px',
+            'lg': '20px',
+            'xl': '28px',
+            'full': '9999px',
+          },
+          fontFamily: {
+            'display': ['"Amiri"', 'sans-serif'],
+            'headline': ['"Amiri"', 'sans-serif'],
+            'title': ['"Noto Kufi Arabic"', 'sans-serif'],
+            'body': ['"Noto Kufi Arabic"', 'sans-serif'],
+            'label': ['"Noto Kufi Arabic"', 'sans-serif'],
+          },
+          fontSize: {
+            'display-lg': ['48px', { lineHeight: '58px', letterSpacing: '-0.5px', fontWeight: '700' }],
+            'display-lg-mobile': ['32px', { lineHeight: '40px', letterSpacing: '-0.25px', fontWeight: '700' }],
+            'headline-lg': ['36px', { lineHeight: '44px', letterSpacing: '-0.25px', fontWeight: '700' }],
+            'headline-lg-mobile': ['28px', { lineHeight: '36px', fontWeight: '700' }],
+            'headline-md': ['28px', { lineHeight: '36px', fontWeight: '700' }],
+            'headline-md-mobile': ['22px', { lineHeight: '30px', fontWeight: '700' }],
+            'headline-sm': ['22px', { lineHeight: '30px', fontWeight: '700' }],
+            'title-lg': ['20px', { lineHeight: '28px', fontWeight: '600' }],
+            'title-md': ['16px', { lineHeight: '24px', fontWeight: '600' }],
+            'body-lg': ['16px', { lineHeight: '26px', fontWeight: '400' }],
+            'body-md': ['14px', { lineHeight: '22px', fontWeight: '400' }],
+            'label-lg': ['14px', { lineHeight: '20px', fontWeight: '600' }],
+            'label-md': ['12px', { lineHeight: '18px', fontWeight: '500' }],
+            'label-sm': ['11px', { lineHeight: '16px', fontWeight: '500' }],
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Typography & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&amp;family=Noto+Kufi+Arabic:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Store, Cart & Interactive App Scripts -->
+  <script src="js/store-data.js" defer></script>
+  <script src="js/cart.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script type="module" src="js/firebase-config.js"></script>
+
+  <!-- Firebase v13.4.0 Direct Integration -->
+  <script type="module">
+    import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
+    import { getAnalytics, logEvent as fbLogEvent } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-analytics.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDK-LcQqUt0YSF9DtOg3m9w_-1gF7H-awQ",
+      authDomain: "tabliya-and-falafel-restaurant.firebaseapp.com",
+      projectId: "tabliya-and-falafel-restaurant",
+      storageBucket: "tabliya-and-falafel-restaurant.firebasestorage.app",
+      messagingSenderId: "763122319755",
+      appId: "1:763122319755:web:077e01d9fa88a9f8bcaf8e",
+      measurementId: "G-YBQ0FGJ24Z"
+    };
+
+    if (!window.WaqarFirebase) {
+      try {
+        const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+        let analytics = null;
+        if (window.location.protocol === 'http:' || window.location.protocol === 'https:') {
+          try { analytics = getAnalytics(app); } catch (e) {}
+        }
+        const db = getFirestore(app);
+        window.WaqarFirebase = {
+          app,
+          analytics,
+          db,
+          firebaseConfig,
+          isReady: () => true,
+          logEvent: (name, params = {}) => {
+            try { if (analytics) fbLogEvent(analytics, name, params); } catch (e) {}
+          }
+        };
+        window.dispatchEvent(new CustomEvent('waqar-firebase-ready'));
+      } catch (e) {
+        console.warn("Firebase init warning:", e);
+      }
+    }
+  </script>
+</head>
+<body class="bg-light-surface text-light-on-surface font-body min-h-screen flex flex-col antialiased selection:bg-soft-sage selection:text-forest-green" data-page="fabrics">
+
+  <!-- Top Announcement Bar -->
+  <aside class="bg-forest-green text-light-on-primary py-2 px-4 text-center border-b border-forest-green/20">
+    <div class="max-w-7xl mx-auto flex items-center justify-between text-label-sm">
+      <div class="hidden md:flex items-center gap-2">
+        <span class="material-symbols-outlined text-[16px] text-champagne-gold">verified</span>
+        <span>ضمان شرعي: كافة الأقمشة معتمة 100% وغير شفافة إطلاقاً</span>
+      </div>
+      <div class="mx-auto flex items-center gap-3">
+        <span class="bg-champagne-gold/20 text-champagne-gold px-2 py-0.5 rounded text-[11px] font-semibold">خدمة مخصصة</span>
+        <span>شحن مغلّف وسري مجاني للطلبات فوق 350 ج.م | استبدال فوري للمقاسات</span>
+      </div>
+      <div class="hidden md:flex items-center gap-4 text-light-on-primary/80">
+        <button type="button" onclick="openWaqarSizingModal()" class="hover:text-white cursor-pointer transition-colors">مساعدة القياس الشرعي</button>
+        <span>•</span>
+        <span class="hover:text-white cursor-pointer">العربية</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Global Navigation Header -->
+  <header class="sticky top-0 z-40 bg-light-surface/95 backdrop-blur-md border-b border-light-outline-variant">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-6">
+      
+      <!-- Brand & Mark -->
+      <a href="index.html" class="flex items-center gap-3 shrink-0">
+        <div class="w-10 h-10 rounded-full bg-soft-sage border border-light-outline-variant flex items-center justify-center text-forest-green">
+          <span class="material-symbols-outlined text-[24px]">spa</span>
+        </div>
+        <div>
+          <span class="font-headline text-headline-sm text-forest-green font-bold tracking-tight block leading-none">وَقار وحَياء</span>
+          <span class="text-[11px] text-mocha-brown block mt-0.5 tracking-wider">Sanctuary of Modest Grace</span>
+        </div>
+      </a>
+
+      <!-- Primary Nav Links -->
+      <nav class="hidden lg:flex items-center gap-8 text-title-md">
+        <a href="index.html" class="text-light-on-surface hover:text-forest-green transition-colors">الرئيسية</a>
+        <a href="products.html?cat=abaya" class="text-light-on-surface hover:text-forest-green transition-colors">عبايات الرأس الساترة</a>
+        <a href="products.html?cat=khimar" class="text-light-on-surface hover:text-forest-green transition-colors">أطقم الخمار (قطعتين و 3)</a>
+        <a href="products.html?cat=isdal" class="text-light-on-surface hover:text-forest-green transition-colors">إسدالات الصلاة الواسعة</a>
+        <a href="products.html?cat=niqab" class="text-light-on-surface hover:text-forest-green transition-colors">تشكيلة النقابات الطبية</a>
+        <a href="fabrics.html" class="text-forest-green font-semibold border-b-2 border-forest-green pb-1">دليل الأقمشة والعتامة</a>
+      </nav>
+
+      <!-- Search & User Actions -->
+      <div class="flex items-center gap-4">
+        <div class="relative hidden sm:block w-64 xl:w-72">
+          <input type="search" placeholder="بحث: كريب ملكي، خمار فرنسي..." class="w-full bg-light-surface-container-low border border-light-outline-variant rounded-full pr-10 pl-4 py-2 text-body-md placeholder:text-light-outline focus:outline-none focus:border-forest-green focus:ring-1 focus:ring-forest-green text-right">
+          <span class="material-symbols-outlined absolute right-3 top-2.5 text-light-outline text-[20px]">search</span>
+        </div>
+
+        <a href="products.html" aria-label="المفضلة" class="w-10 h-10 rounded-full bg-light-surface-container-low border border-light-outline-variant flex items-center justify-center text-light-on-surface hover:text-forest-green transition-colors">
+          <span class="material-symbols-outlined text-[20px]">favorite_border</span>
+        </a>
+
+        <a href="cart.html" aria-label="السلة" class="relative flex items-center gap-2 bg-soft-sage text-forest-green px-4 py-2 rounded-full border border-forest-green/20 hover:bg-forest-green hover:text-white transition-colors">
+          <span class="material-symbols-outlined text-[20px]">shopping_bag</span>
+          <span class="text-label-md font-semibold hidden md:inline">الحقيبة</span>
+          <span class="cart-badge-count w-5 h-5 rounded-full bg-forest-green text-white text-[11px] flex items-center justify-center font-bold">2</span>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <main class="flex-1">
+
+    <!-- Page Hero Banner -->
+    <section class="relative bg-forest-green text-white py-14 lg:py-20 border-b border-forest-green/20 overflow-hidden">
+      <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        <div class="lg:col-span-7 space-y-5 text-right">
+          <div class="flex items-center gap-2 text-label-sm text-white/80 mb-2">
+            <a href="index.html" class="hover:text-champagne-gold transition-colors">الرئيسية</a>
+            <span>/</span>
+            <span class="text-champagne-gold font-semibold">دليل الأقمشة والعتامة الشرعية</span>
+          </div>
+
+          <div class="inline-flex items-center gap-2 bg-champagne-gold/20 border border-champagne-gold/40 text-champagne-gold px-4 py-1.5 rounded-full text-label-sm font-bold">
+            <span class="material-symbols-outlined text-[18px]">verified_user</span>
+            <span>مختبر العتامة والجودة — ضمان عدم الشفافية 100%</span>
+          </div>
+
+          <h1 class="font-headline text-display-lg-mobile md:text-display-lg text-white leading-tight">
+            دليل أفضل الأقمشة الشرعية ومعايير فحص العتامة
+          </h1>
+
+          <p class="text-body-lg text-white/85 max-w-2xl leading-relaxed">
+            نختار في «وقار وحياء» نخبة الأقمشة العالمية التي تجمع بين الوقار الشرعي التام، الكثافة العالية التي لا تشف ولا تصف، والبرودة الفائقة لتنعمي بالستر المريح في كل الفصول.
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 max-w-xl">
+            <div class="flex items-center gap-2.5 bg-white/10 border border-white/20 px-4 py-3 rounded-xl">
+              <span class="material-symbols-outlined text-champagne-gold text-[22px]">check_circle</span>
+              <span class="text-body-sm font-semibold">اختبار الشمس: عدم نفاذ أي خيال للجسم</span>
+            </div>
+            <div class="flex items-center gap-2.5 bg-white/10 border border-white/20 px-4 py-3 rounded-xl">
+              <span class="material-symbols-outlined text-champagne-gold text-[22px]">check_circle</span>
+              <span class="text-body-sm font-semibold">مقاوم للتجعد وسهل الغسيل</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5">
+          <div class="relative rounded-2xl overflow-hidden border-2 border-champagne-gold/50 shadow-2xl">
+            <img src="images/opacity-sun-test.jpg" onerror="this.src='images/fabric-heavy-crepe.webp'" alt="اختبار الشمس وعدم نفاذ أي خيال للجسم" class="w-full h-80 lg:h-96 object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6 text-white">
+              <div class="flex items-center gap-2 text-champagne-gold font-bold text-label-md mb-1">
+                <span class="material-symbols-outlined text-[20px]">wb_sunny</span>
+                <span>فحص ضوء الشمس المباشر (5000 شمعة)</span>
+              </div>
+              <p class="text-body-sm text-white/90">يتم فحص كل رول قماش أمام الإضاءة المباشرة للتأكد من انعدام الشفافية تماماً قبل التفصيل.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Highlight Section: Natural Cotton & Summer Linen Blend -->
+    <section id="cotton-linen-showcase" class="py-16 bg-light-surface-container-low border-b border-light-outline-variant">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="bg-light-surface rounded-2xl border-2 border-forest-green/30 shadow-lg overflow-hidden">
+          <div class="grid grid-cols-1 lg:grid-cols-12">
+            
+            <!-- Gallery for Cotton & Summer Linen -->
+            <div class="lg:col-span-6 p-6 bg-warm-taupe/20 flex flex-col gap-4 justify-center">
+              <div class="relative rounded-xl overflow-hidden border border-light-outline-variant shadow-md h-72 sm:h-80">
+                <img id="cotton-main-img" src="images/fabric-cotton-linen.jpg" alt="مزيج القطن الطبيعي والكتان الصيفي" class="w-full h-full object-cover">
+                <div class="absolute top-3 right-3 bg-forest-green text-white px-3 py-1 rounded-full text-label-sm font-bold flex items-center gap-1.5 shadow">
+                  <span class="material-symbols-outlined text-[16px] text-champagne-gold">air</span>
+                  <span>تنفس طبيعي 100% • 180 - 210 GSM</span>
+                </div>
+              </div>
+              <div class="grid grid-cols-3 gap-3">
+                <button type="button" onclick="document.getElementById('cotton-main-img').src='images/fabric-cotton-linen.jpg'" class="rounded-lg overflow-hidden border-2 border-forest-green h-24 cursor-pointer">
+                  <img src="images/fabric-cotton-linen.jpg" alt="نسيج القطن الطبيعي والكتان" class="w-full h-full object-cover">
+                </button>
+                <button type="button" onclick="document.getElementById('cotton-main-img').src='images/fabric-cotton-linen-drape.jpg'" class="rounded-lg overflow-hidden border border-light-outline-variant hover:border-forest-green h-24 cursor-pointer">
+                  <img src="images/fabric-cotton-linen-drape.jpg" onerror="this.src='images/isdal-salat-wasi.webp'" alt="تبطين منطقة الصدر لمزيد من الستر" class="w-full h-full object-cover">
+                </button>
+                <button type="button" onclick="document.getElementById('cotton-main-img').src='images/isdal-salat-wasi.webp'" class="rounded-lg overflow-hidden border border-light-outline-variant hover:border-forest-green h-24 cursor-pointer">
+                  <img src="images/isdal-salat-wasi.webp" alt="إسدال الصلاة والحج والعمرة" class="w-full h-full object-cover">
+                </button>
+              </div>
+            </div>
+
+            <!-- Content & Specifications -->
+            <div class="lg:col-span-6 p-8 lg:p-10 flex flex-col justify-between space-y-6">
+              <div class="space-y-4">
+                <div class="inline-flex items-center gap-2 bg-soft-sage text-forest-green px-3.5 py-1 rounded-full text-label-sm font-bold">
+                  <span class="material-symbols-outlined text-[16px] text-champagne-gold">verified</span>
+                  <span>النسيج الأول للصيف والصلوات والحج والعمرة</span>
+                </div>
+
+                <h2 class="font-headline text-headline-lg text-forest-green">
+                  مزيج القطن الطبيعي والكتان الصيفي
+                </h2>
+
+                <p class="text-body-lg text-light-on-surface leading-relaxed">
+                  مصمم لأجواء الصيف الحارة والصلوات الطويلة وأداء مناسك الحج والعمرة. نسيج نقي يسمح بمرور الهواء ويمنع التعرق تماماً.
+                </p>
+
+                <div class="space-y-3 pt-2">
+                  <div class="flex items-start gap-3 p-3.5 rounded-xl bg-soft-sage/50 border border-forest-green/20">
+                    <span class="material-symbols-outlined text-forest-green text-[22px] shrink-0 mt-0.5">check_circle</span>
+                    <div>
+                      <h4 class="font-title text-title-md text-forest-green font-bold">ألياف قطنية طبيعية فائقة الامتصاص</h4>
+                      <p class="text-body-sm text-light-outline mt-0.5">خيوط قطن وكتان طبيعية 100% تمنح برودة فورية على البشرة وتسمح بتنفس المسام في أشد أيام الصيف حرارة.</p>
+                    </div>
+                  </div>
+
+                  <div class="flex items-start gap-3 p-3.5 rounded-xl bg-soft-sage/50 border border-forest-green/20">
+                    <span class="material-symbols-outlined text-forest-green text-[22px] shrink-0 mt-0.5">check_circle</span>
+                    <div>
+                      <h4 class="font-title text-title-md text-forest-green font-bold">مبطن في مناطق الصدر لمزيد من الستر للنساء</h4>
+                      <p class="text-body-sm text-light-outline mt-0.5">طبقة تبطين داخلية مزدوجة في منطقة الصدر والأكتاف تضمن عدم تحديد أي معالم للجسم أثناء الحركة أو الركوع والسجود.</p>
+                    </div>
+                  </div>
+
+                  <div class="flex items-start gap-3 p-3.5 rounded-xl bg-light-surface-container-low border border-light-outline-variant">
+                    <span class="material-symbols-outlined text-forest-green text-[22px] shrink-0 mt-0.5">check_circle</span>
+                    <div>
+                      <h4 class="font-title text-title-md text-forest-green font-bold">اختبار الشمس: عدم نفاذ أي خيال للجسم</h4>
+                      <p class="text-body-sm text-light-outline mt-0.5">نسيج محكم الغزل يمنع نفاذ الضوء أو ظهور خيال الجسم حتى تحت أشعة الشمس المباشرة.</p>
+                    </div>
+                  </div>
+
+                  <div class="flex items-start gap-3 p-3.5 rounded-xl bg-light-surface-container-low border border-light-outline-variant">
+                    <span class="material-symbols-outlined text-forest-green text-[22px] shrink-0 mt-0.5">check_circle</span>
+                    <div>
+                      <h4 class="font-title text-title-md text-forest-green font-bold">مقاوم للتجعد وسهل الغسيل</h4>
+                      <p class="text-body-sm text-light-outline mt-0.5">معالج طبيعياً ليحافظ على نعومته وانسداله المرتب بعد الغسيل المتكرر دون انكماش.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pt-4 border-t border-light-outline-variant flex flex-wrap items-center gap-4">
+                <a href="products.html?cat=isdal" class="flex-1 text-center py-3.5 px-6 rounded-lg bg-forest-green text-white font-label text-label-lg font-bold hover:bg-forest-green/90 transition-colors shadow">
+                  تسوقي إسدالات وأطقم القطن والكتان الصيفي
+                </a>
+                <a href="product-detail.html?id=prayer-dress-mihrab" class="py-3.5 px-5 rounded-lg bg-soft-sage text-forest-green font-label text-label-md font-bold hover:bg-forest-green hover:text-white transition-colors">
+                  عرض إسدال «مِحراب»
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- All Best Modest Fabrics Grid -->
+    <section class="py-16 max-w-7xl mx-auto px-6">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="text-champagne-gold font-semibold text-label-md block mb-2">أفضل الأقمشة الشرعية المعتمدة</span>
+        <h2 class="font-headline text-headline-lg text-forest-green mb-3">مواصفات الأقمشة المختارة في وقار وحياء</h2>
+        <p class="text-body-md text-light-outline">
+          كل نسيج لدينا يمر باختبارات صارمة للعتامة، ثبات اللون، ومقاومة التجعد ليضمن لكِ حجاباً شرعياً لا يصف ولا يشف.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <!-- Tier 1: Heavy Royal Crepe -->
+        <div class="bg-light-surface-container-low rounded-2xl border border-light-outline-variant shadow-sm overflow-hidden flex flex-col justify-between product-card-hover">
+          <div>
+            <div class="h-56 overflow-hidden relative">
+              <img src="images/opacity-sun-test.jpg" onerror="this.src='images/fabric-heavy-crepe.webp'" alt="الكريب الملكي الثقيل" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+              <div class="absolute bottom-3 right-3 left-3 flex items-center justify-between">
+                <span class="px-3 py-1 rounded-full text-[12px] bg-forest-green text-white font-semibold">عتامة 100% مطلقة</span>
+                <span class="text-[12px] text-white font-mono font-bold bg-black/60 px-2.5 py-0.5 rounded">240 - 280 GSM</span>
+              </div>
+            </div>
+            <div class="p-6">
+              <h3 class="font-title text-title-lg text-forest-green mb-2 font-bold">1. الكريب الملكي الثقيل (Heavy Royal Crepe)</h3>
+              <p class="text-body-md text-light-outline leading-relaxed mb-4">
+                نسيج غير شفاف إطلاقاً، ذو وزن رصين يعطي انسدالاً وقوراً لا يلتصق بالجسد ولا يتطاير مع الرياح. مثالي للطلعات الرسمية ولعباءات الرأس والبشت.
+              </p>
+              <ul class="space-y-2.5 text-body-sm text-light-on-surface mb-2">
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-forest-green text-[18px]">check_circle</span>
+                  <span class="font-semibold">اختبار الشمس: عدم نفاذ أي خيال للجسم</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-forest-green text-[18px]">check_circle</span>
+                  <span class="font-semibold">مقاوم للتجعد وسهل الغسيل</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-forest-green text-[18px]">check_circle</span>
+                  <span>سواد كاحل فاحم ثابت لا يبهت مع الغسيل</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="p-6 pt-0">
+            <a href="products.html?cat=abaya" class="block text-center py-3 px-4 rounded-lg bg-forest-green text-white font-label text-label-md hover:bg-forest-green/90 transition-colors font-bold">
+              استعراض عباءات الكريب الملكي الثقيل
+            </a>
+          </div>
+        </div>
+
+        <!-- Tier 2: Medina Silk & Salona -->
+        <div class="bg-light-surface-container-low rounded-2xl border-2 border-champagne-gold/70 shadow-md relative overflow-hidden flex flex-col justify-between product-card-hover">
+          <div class="absolute top-3 right-3 z-10 bg-champagne-gold text-forest-green text-[11px] font-bold px-3 py-1 rounded-full shadow-md">
+            الأكثر طلباً للأخوات
+          </div>
+          <div>
+            <div class="h-56 overflow-hidden relative">
+              <img src="images/fabric-medina-silk.webp" alt="حرير المدينة وكريب الصالونة الناعم" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+              <div class="absolute bottom-3 right-3 left-3 flex items-center justify-between">
+                <span class="px-3 py-1 rounded-full text-[12px] bg-soft-sage text-forest-green font-semibold">انسيابية وعتامة عالية</span>
+                <span class="text-[12px] text-white font-mono font-bold bg-black/60 px-2.5 py-0.5 rounded">190 - 220 GSM</span>
+              </div>
+            </div>
+            <div class="p-6">
+              <h3 class="font-title text-title-lg text-forest-green mb-2 font-bold">2. حرير المدينة وكريب الصالونة الناعم</h3>
+              <p class="text-body-md text-light-outline leading-relaxed mb-4">
+                انسيابية فائقة ولمسة حريرية مطفية غير لامعة، يوفر وقار الخمار الفرنسي والجلباب وانسيابية الحركة اليومية مع برودة ممتازة.
+              </p>
+              <ul class="space-y-2.5 text-body-sm text-light-on-surface mb-2">
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-forest-green text-[18px]">check_circle</span>
+                  <span class="font-semibold">اختبار الشمس: عدم نفاذ أي خيال للجسم</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-forest-green text-[18px]">check_circle</span>
+                  <span class="font-semibold">مقاوم للتجعد وسهل الغسيل</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-forest-green text-[18px]">check_circle</span>
+                  <span>خفة وراحة فائقة على الرأس والأكتاف</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="p-6 pt-0">
+            <a href="products.html?cat=khimar" class="block text-center py-3 px-4 rounded-lg bg-forest-green text-white font-label text-label-md hover:bg-forest-green/90 transition-colors font-bold">
+              استعراض أطقم الخمار وحرير المدينة
+            </a>
+          </div>
+        </div>
+
+        <!-- Tier 3: Korean Medical Chiffon for Niqabs -->
+        <div class="bg-light-surface-container-low rounded-2xl border border-light-outline-variant shadow-sm overflow-hidden flex flex-col justify-between product-card-hover">
+          <div>
+            <div class="h-56 overflow-hidden relative">
+              <img src="images/niqab-amira-trio.webp" alt="الشيفون الكوري الطبي للنقابات" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+              <div class="absolute bottom-3 right-3 left-3 flex items-center justify-between">
+                <span class="px-3 py-1 rounded-full text-[12px] bg-champagne-gold text-forest-green font-bold">تنفس طبي بارد</span>
+                <span class="text-[12px] text-white font-mono font-bold bg-black/60 px-2.5 py-0.5 rounded">طبقات مزدوجة</span>
+              </div>
+            </div>
+            <div class="p-6">
+              <h3 class="font-title text-title-lg text-forest-green mb-2 font-bold">3. الشيفون الكوري الطبي للنقابات</h3>
+              <p class="text-body-md text-light-outline leading-relaxed mb-4">
+                مصمم خصيصاً للأخوات المنتقبات لساعات طويلة؛ مسامات دقيقة تسمح بتنفس نقي وبارد دون كتم، مع طبقات ساترة لا تشف الوجه إطلاقاً.
+              </p>
+              <ul class="space-y-2.5 text-body-sm text-light-on-surface mb-2">
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-forest-green text-[18px]">check_circle</span>
+                  <span class="font-semibold">اختبار الشمس: عدم نفاذ أي خيال للجسم</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-forest-green text-[18px]">check_circle</span>
+                  <span class="font-semibold">مقاوم للتجعد وسهل الغسيل</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-forest-green text-[18px]">check_circle</span>
+                  <span>لطيف على البشرة الحساسة ومتوافق مع النظارات الطبية</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="p-6 pt-0">
+            <a href="products.html?cat=niqab" class="block text-center py-3 px-4 rounded-lg bg-forest-green text-white font-label text-label-md hover:bg-forest-green/90 transition-colors font-bold">
+              استعراض تشكيلة النقابات الطبية
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Fabric Comparison Matrix Table -->
+    <section class="pb-16 max-w-7xl mx-auto px-6">
+      <div class="bg-light-surface-container-low rounded-2xl border border-light-outline-variant p-6 md:p-8 overflow-x-auto">
+        <h3 class="font-headline text-headline-md text-forest-green mb-6 text-center">جدول مقارنة الأقمشة الشرعية ومعايير العتامة</h3>
+        <table class="w-full text-right border-collapse text-body-sm">
+          <thead>
+            <tr class="bg-forest-green text-white">
+              <th class="p-3.5 rounded-tr-lg">نوع النسيج</th>
+              <th class="p-3.5">الكثافة (GSM)</th>
+              <th class="p-3.5">اختبار الشمس والعتامة</th>
+              <th class="p-3.5">التبطين والستر الإضافي</th>
+              <th class="p-3.5">مقاومة التجعد والغسيل</th>
+              <th class="p-3.5 rounded-tl-lg">الاستخدام الأمثل</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-light-outline-variant bg-light-surface">
+            <tr>
+              <td class="p-3.5 font-bold text-forest-green">مزيج القطن الطبيعي والكتان الصيفي</td>
+              <td class="p-3.5 font-mono">180 - 210 GSM</td>
+              <td class="p-3.5 text-forest-green font-semibold">✓ عدم نفاذ أي خيال للجسم (100%)</td>
+              <td class="p-3.5 font-semibold text-mocha-brown">✓ مبطن في مناطق الصدر لمزيد من الستر للنساء</td>
+              <td class="p-3.5">✓ ألياف قطنية فائقة الامتصاص وسهلة الغسيل</td>
+              <td class="p-3.5">الصيف، الصلوات الطويلة، الحج والعمرة</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-bold text-forest-green">الكريب الملكي الياباني الثقيل</td>
+              <td class="p-3.5 font-mono">240 - 280 GSM</td>
+              <td class="p-3.5 text-forest-green font-semibold">✓ عدم نفاذ أي خيال للجسم (100%)</td>
+              <td class="p-3.5">✓ ثقل طبيعي يمنع الالتصاق (Zero-Cling)</td>
+              <td class="p-3.5">✓ مقاوم للتجعد وسهل الغسيل بدون كيّ</td>
+              <td class="p-3.5">عباءات الرأس الساترة والبشت الرسمي</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-bold text-forest-green">حرير المدينة الناعم (Medina Silk)</td>
+              <td class="p-3.5 font-mono">190 - 220 GSM</td>
+              <td class="p-3.5 text-forest-green font-semibold">✓ عدم نفاذ أي خيال للجسم (100%)</td>
+              <td class="p-3.5">✓ قصة كلوش واسعة وطبقات منسدلة</td>
+              <td class="p-3.5">✓ مقاوم للتجعد وسهل الغسيل</td>
+              <td class="p-3.5">أطقم الخمار الفرنسي والجلباب اليومي</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-bold text-forest-green">الشيفون الكوري الطبي للنقابات</td>
+              <td class="p-3.5 font-mono">طبقات مزدوجة</td>
+              <td class="p-3.5 text-forest-green font-semibold">✓ ساتر للوجه 100% بدون شفافية</td>
+              <td class="p-3.5">✓ أربطة قطنية وخيط عين ناعم مبطن</td>
+              <td class="p-3.5">✓ غسيل يدوي سريع وجفاف فوري</td>
+              <td class="p-3.5">النقابات الطبية والارتداء الطويل مع النظارات</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="bg-light-surface-container-low border-t border-light-outline-variant pt-16 pb-12 text-light-on-surface">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
+      <div class="lg:col-span-2 space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-soft-sage border border-light-outline-variant flex items-center justify-center text-forest-green">
+            <span class="material-symbols-outlined text-[24px]">spa</span>
+          </div>
+          <span class="font-headline text-headline-sm text-forest-green font-bold">وَقار وحَياء</span>
+        </div>
+        <p class="text-body-md text-light-outline leading-relaxed max-w-sm">
+          علامة متخصصة في الحجاب الشرعي الكامل، نسعى لتوفير أرقى الأقمشة الساترة غير الشفافة للأخوات المنتقبات والمختمرات بحرفية وعناية وأمانة تامة.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="font-title text-title-md text-forest-green mb-4 font-bold">أقسام المتجر</h4>
+        <ul class="space-y-2.5 text-body-sm text-light-outline">
+          <li><a href="products.html?cat=abaya" class="hover:text-forest-green transition-colors">عبايات الرأس الساترة</a></li>
+          <li><a href="products.html?cat=khimar" class="hover:text-forest-green transition-colors">أطقم الخمار الفرنسي</a></li>
+          <li><a href="products.html?cat=isdal" class="hover:text-forest-green transition-colors">إسدالات الصلاة القطنية</a></li>
+          <li><a href="products.html?cat=niqab" class="hover:text-forest-green transition-colors">تشكيلة النقابات الطبية</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-title text-title-md text-forest-green mb-4 font-bold">ضمانات الستر</h4>
+        <ul class="space-y-2.5 text-body-sm text-light-outline">
+          <li><a href="fabrics.html" class="hover:text-forest-green transition-colors font-semibold text-forest-green">دليل الأقمشة ومعايير العتامة 100%</a></li>
+          <li><a href="sizing_chart_render.html" class="hover:text-forest-green transition-colors">جدول قياس الأطوال (54-64)</a></li>
+          <li><a href="cart.html" class="hover:text-forest-green transition-colors">سياسة التغليف السري والكتوم</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-title text-title-md text-forest-green mb-4 font-bold">خدمة الأخوات</h4>
+        <p class="text-body-sm text-light-outline mb-3">فريق استشاري نسائي متكامل للإجابة على كافة استفسارات الأطوال والأقمشة.</p>
+        <div class="space-y-2 text-label-sm font-semibold text-forest-green">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-[18px]">chat</span>
+            <a href="https://wa.me/201092298237" target="_blank" class="hover:underline">واتساب نسائي مخصص: 01092298237</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -58,7 +58,7 @@ export function logEvent(eventName, params = {}) {
  * إرسال وحفظ الطلب في Firestore (مجموعة orders)
  */
 export async function submitOrder(orderData) {
-  logEvent('begin_checkout', { value: orderData.finalTotal, currency: 'SAR' });
+  logEvent('begin_checkout', { value: orderData.finalTotal, currency: 'EGP' });
 
   const payload = {
     ...orderData,
@@ -73,7 +73,7 @@ export async function submitOrder(orderData) {
       logEvent('purchase', {
         transaction_id: docRef.id,
         value: orderData.finalTotal,
-        currency: 'SAR',
+        currency: 'EGP',
         items: orderData.items?.map(i => ({ item_name: i.title, quantity: i.quantity, price: i.price }))
       });
       return { success: true, id: docRef.id, fromFirebase: true };

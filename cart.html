@@ -159,7 +159,7 @@
       </div>
       <div class="mx-auto flex items-center gap-3">
         <span class="bg-champagne-gold/20 text-champagne-gold px-2 py-0.5 rounded text-[11px] font-semibold">خدمة مخصصة</span>
-        <span>شحن مغلّف وسري مجاني للطلبات فوق 350 ر.س | استبدال فوري للمقاسات</span>
+        <span>شحن مغلّف وسري مجاني للطلبات فوق 350 ج.م | استبدال فوري للمقاسات</span>
       </div>
       <div class="hidden md:flex items-center gap-4 text-light-on-primary/80">
         <button type="button" onclick="openWaqarSizingModal()" class="hover:text-white cursor-pointer transition-colors">مساعدة القياس الشرعي</button>
@@ -246,7 +246,7 @@
                   <h3 class="font-title text-title-md text-forest-green font-bold">طقم عباية الرأس الفاخرة «سَكينة» (طقم متكامل)</h3>
                   <p class="text-label-sm text-light-outline mt-0.5">كريب صالونة ياباني (260 GSM) • سواد كاحل فاحم</p>
                 </div>
-                <span class="font-headline text-headline-sm text-forest-green font-bold">340 ر.س</span>
+                <span class="font-headline text-headline-sm text-forest-green font-bold">340 ج.م</span>
               </div>
 
               <!-- Modesty Specs Meta Chips -->
@@ -289,7 +289,7 @@
                   <h3 class="font-title text-title-md text-forest-green font-bold">طقم الخمار الفرنسي «عَفاف» قطعتين (لون الموكا الدافئ)</h3>
                   <p class="text-label-sm text-light-outline mt-0.5">حرير المدينة الناعم (210 GSM) • خمار + تنورة كلوش</p>
                 </div>
-                <span class="font-headline text-headline-sm text-forest-green font-bold">295 ر.س</span>
+                <span class="font-headline text-headline-sm text-forest-green font-bold">295 ج.م</span>
               </div>
 
               <!-- Modesty Specs Meta Chips -->
@@ -399,31 +399,71 @@
           <div class="space-y-3 text-body-md text-light-outline">
             <div class="flex items-center justify-between">
               <span>مجموع الأطقم (<span class="cart-badge-count">2</span> قطع)</span>
-              <span class="font-mono text-light-on-surface font-semibold">635 ر.س</span>
+              <span class="font-mono text-light-on-surface font-semibold">635 ج.م</span>
             </div>
             
             <div class="flex items-center justify-between">
               <span>خصم باقة الستر المتكاملة (10%)</span>
-              <span class="font-mono text-forest-green font-semibold">-63.50 ر.س</span>
+              <span class="font-mono text-forest-green font-semibold">-63.50 ج.م</span>
+            </div>
+
+            <div id="summary-coupon-row" class="hidden flex items-center justify-between text-forest-green bg-soft-sage/50 px-2.5 py-1.5 rounded-lg border border-forest-green/20">
+              <span id="summary-coupon-label" class="font-semibold text-label-sm">كود الخصم (WAQAR10)</span>
+              <span id="summary-coupon-amount" class="font-mono font-bold">-57.15 ج.م</span>
             </div>
 
             <div class="flex items-center justify-between">
-              <span>الشحن الكتوم السريع (أرامكس / سمسا)</span>
-              <span class="text-forest-green font-bold">مـجـانـي (تجاوز 350 ر.س)</span>
+              <span>الشحن الكتوم السريع (لجميع المحافظات)</span>
+              <span class="text-forest-green font-bold">مـجـانـي (تجاوز 350 ج.م)</span>
             </div>
 
             <div class="flex items-center justify-between">
               <span>ضريبة القيمة المضافة (15% مشمولة)</span>
-              <span class="font-mono text-light-outline">85.80 ر.س</span>
+              <span class="font-mono text-light-outline">85.80 ج.م</span>
             </div>
           </div>
 
           <!-- Coupon / Gift Code Field -->
-          <div class="pt-2">
+          <div class="pt-3 border-t border-light-outline-variant/60 space-y-2.5">
+            <label for="coupon-code-input" class="block font-label text-label-sm text-forest-green font-bold flex items-center justify-between">
+              <span class="flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-[18px] text-champagne-gold">redeem</span>
+                <span>رمز الإهداء أو كود الخصم:</span>
+              </span>
+              <button type="button" onclick="window.applyWaqarQuickCoupon && window.applyWaqarQuickCoupon('WAQAR10')" class="text-[11px] text-mocha-brown hover:text-forest-green underline cursor-pointer font-semibold">
+                (جربي WAQAR10 بالضغط هنا)
+              </button>
+            </label>
+
             <div class="flex items-center gap-2">
-              <input type="text" placeholder="رمز الإهداء أو كود الخصم (جربي WAQAR10)" class="flex-1 bg-light-surface border border-light-outline-variant rounded px-3 py-2 text-body-sm focus:outline-none focus:border-forest-green">
-              <button type="button" class="px-4 py-2 bg-soft-sage text-forest-green font-label text-label-sm font-semibold rounded hover:bg-forest-green hover:text-white transition-colors">
+              <input id="coupon-code-input" type="text" placeholder="رمز الإهداء أو كود الخصم (جربي WAQAR10)" class="flex-1 bg-light-surface border border-light-outline-variant rounded-lg px-3.5 py-2.5 text-body-sm font-semibold text-forest-green placeholder:font-normal focus:outline-none focus:border-forest-green focus:ring-1 focus:ring-forest-green">
+              <button id="apply-coupon-btn" type="button" class="px-5 py-2.5 bg-forest-green text-white font-label text-label-sm font-bold rounded-lg hover:bg-forest-green/90 transition-colors cursor-pointer shadow-sm">
                 تطبيق
+              </button>
+            </div>
+
+            <!-- Quick Clickable Coupon Chips -->
+            <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
+              <span class="text-[11px] text-light-outline">رموز متاحة للتجربة:</span>
+              <button type="button" data-quick-coupon="WAQAR10" class="quick-coupon-chip text-[11px] bg-soft-sage hover:bg-forest-green text-forest-green hover:text-white px-2.5 py-1 rounded-full font-bold transition-colors cursor-pointer border border-forest-green/20">
+                🏷️ WAQAR10 (خصم 10%)
+              </button>
+              <button type="button" data-quick-coupon="HAYAA15" class="quick-coupon-chip text-[11px] bg-soft-sage hover:bg-forest-green text-forest-green hover:text-white px-2.5 py-1 rounded-full font-bold transition-colors cursor-pointer border border-forest-green/20">
+                ✨ HAYAA15 (خصم 15%)
+              </button>
+              <button type="button" data-quick-coupon="GIFT50" class="quick-coupon-chip text-[11px] bg-champagne-gold/25 hover:bg-champagne-gold text-forest-green px-2.5 py-1 rounded-full font-bold transition-colors cursor-pointer border border-champagne-gold/50">
+                🎁 GIFT50 (هدية 50 ج.م)
+              </button>
+            </div>
+
+            <!-- Active Coupon Status Banner -->
+            <div id="applied-coupon-banner" class="hidden items-center justify-between bg-soft-sage border border-forest-green/30 text-forest-green px-3 py-2 rounded-lg text-label-xs">
+              <div class="flex items-center gap-1.5 font-bold">
+                <span class="material-symbols-outlined text-[16px] text-champagne-gold">check_circle</span>
+                <span id="applied-coupon-text">تم تفعيل كود WAQAR10</span>
+              </div>
+              <button type="button" id="remove-coupon-btn" class="text-rose-700 hover:underline font-bold cursor-pointer">
+                إلغاء الكود
               </button>
             </div>
           </div>
@@ -434,7 +474,7 @@
               <span class="font-title text-title-md text-forest-green font-bold block">المبلغ الإجمالي النهائي</span>
               <span class="text-label-xs text-light-outline">شامل كافة الضرائب والشحن المغلف</span>
             </div>
-            <span class="font-headline text-display-lg-mobile text-forest-green font-bold">571.50 ر.س</span>
+            <span class="font-headline text-display-lg-mobile text-forest-green font-bold">571.50 ج.م</span>
           </div>
 
           <!-- Payment Options with Logos -->
@@ -444,19 +484,29 @@
             <label class="flex items-center justify-between p-3 rounded-lg border-2 border-forest-green bg-light-surface cursor-pointer">
               <div class="flex items-center gap-2.5">
                 <input type="radio" name="payment_method" checked class="text-forest-green focus:ring-forest-green">
-                <span class="font-semibold text-forest-green text-body-sm">مدى / Apple Pay / البطاقة الائتمانية</span>
+                <span class="font-semibold text-forest-green text-body-sm">إنستا باي (InstaPay — تحويل بنكي لحظي)</span>
               </div>
-              <div class="flex items-center gap-1.5 text-forest-green font-bold text-xs bg-soft-sage px-2 py-0.5 rounded">
-                <span>Mada</span> • <span>ApplePay</span>
+              <div class="flex items-center gap-1.5 text-forest-green font-bold text-xs bg-soft-sage px-2.5 py-0.5 rounded">
+                <span>InstaPay</span>
               </div>
             </label>
 
             <label class="flex items-center justify-between p-3 rounded-lg border border-light-outline-variant bg-light-surface cursor-pointer hover:border-forest-green/40">
               <div class="flex items-center gap-2.5">
                 <input type="radio" name="payment_method" class="text-forest-green focus:ring-forest-green">
-                <span class="font-semibold text-light-on-surface text-body-sm">تمارا / تابي (قسميها على 4 دفعات بدون فوائد)</span>
+                <span class="font-semibold text-light-on-surface text-body-sm">فودافون كاش (Vodafone Cash — 01092298237)</span>
               </div>
-              <span class="text-label-xs bg-warm-taupe/30 text-mocha-brown font-bold px-2 py-0.5 rounded">142.87 ر.س / شهر</span>
+              <span class="text-label-xs bg-rose-100 text-rose-800 font-bold px-2.5 py-0.5 rounded">Vodafone Cash</span>
+            </label>
+
+            <label class="flex items-center justify-between p-3 rounded-lg border border-light-outline-variant bg-light-surface cursor-pointer hover:border-forest-green/40">
+              <div class="flex items-center gap-2.5">
+                <input type="radio" name="payment_method" class="text-forest-green focus:ring-forest-green">
+                <span class="font-semibold text-light-on-surface text-body-sm">بطاقة ائتمانية أو بالفيزا (بطاقة ائتمانية / فيزا VisaCard / ميزة)</span>
+              </div>
+              <div class="flex items-center gap-1 text-forest-green font-bold text-xs bg-soft-sage px-2 py-0.5 rounded">
+                <span>Visa</span> • <span>MasterCard</span>
+              </div>
             </label>
 
             <label class="flex items-center justify-between p-3 rounded-lg border border-light-outline-variant bg-light-surface cursor-pointer hover:border-forest-green/40">
@@ -472,7 +522,7 @@
           <div class="pt-4">
             <button type="button" class="confirm-order-btn w-full py-4 px-6 rounded bg-forest-green hover:bg-forest-green/90 text-white font-label text-label-lg font-bold text-center shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer">
               <span class="material-symbols-outlined text-[22px] text-champagne-gold">verified</span>
-              <span>تأكيد الطلب وشحن الشحنة الساترة (571.50 ر.س)</span>
+              <span>تأكيد الطلب وشحن الشحنة الساترة (571.50 ج.م)</span>
             </button>
           </div>
 
@@ -513,7 +563,7 @@
           <div class="w-9 h-9 rounded-full bg-light-surface border border-light-outline-variant flex items-center justify-center">
             <span class="material-symbols-outlined text-[18px]">verified</span>
           </div>
-          <span class="text-label-sm font-semibold">موثق في منصة الأعمال السعودية • متصل بـ Firebase</span>
+          <span class="text-label-sm font-semibold">متجر معتمد في مصر • متصل بـ Firebase</span>
         </div>
       </div>
 
@@ -530,7 +580,7 @@
       <div>
         <h4 class="font-title text-title-md text-forest-green mb-4 font-bold">ضمانات الستر</h4>
         <ul class="space-y-2.5 text-body-sm text-light-outline">
-          <li><a href="index.html#coverage-fabric" class="hover:text-forest-green transition-colors">معايير فحص العتامة 100%</a></li>
+          <li><a href="fabrics.html" class="hover:text-forest-green transition-colors">دليل الأقمشة ومعايير العتامة 100%</a></li>
           <li><a href="product-detail.html#sizing-guide" class="hover:text-forest-green transition-colors">جدول قياس الأطوال (54-64)</a></li>
           <li><a href="cart.html" class="hover:text-forest-green transition-colors">سياسة التغليف السري والكتوم</a></li>
           <li><a href="#" class="hover:text-forest-green transition-colors">الاستبدال المجاني للمقاسات</a></li>
@@ -543,7 +593,7 @@
         <div class="space-y-2 text-label-sm font-semibold text-forest-green">
           <div class="flex items-center gap-2">
             <span class="material-symbols-outlined text-[18px]">chat</span>
-            <span>واتساب نسائي مخصص: 966500000000+</span>
+            <a href="https://wa.me/201092298237" target="_blank" class="hover:underline">واتساب نسائي مخصص: 01092298237</a>
           </div>
           <div class="flex items-center gap-2">
             <span class="material-symbols-outlined text-[18px]">mail</span>
@@ -559,11 +609,10 @@
       
       <!-- Payment Badges -->
       <div class="flex flex-wrap items-center gap-3">
-        <span class="bg-light-surface px-2.5 py-1 rounded border border-light-outline-variant font-bold text-[12px] text-forest-green">مدى Mada</span>
-        <span class="bg-light-surface px-2.5 py-1 rounded border border-light-outline-variant font-bold text-[12px] text-forest-green">Apple Pay</span>
-        <span class="bg-light-surface px-2.5 py-1 rounded border border-light-outline-variant font-bold text-[12px] text-forest-green">Visa / Master</span>
-        <span class="bg-light-surface px-2.5 py-1 rounded border border-light-outline-variant font-bold text-[12px] text-forest-green">تمارا Tamara</span>
-        <span class="bg-light-surface px-2.5 py-1 rounded border border-light-outline-variant font-bold text-[12px] text-forest-green">تابي Tabby</span>
+        <span class="bg-light-surface px-2.5 py-1 rounded border border-light-outline-variant font-bold text-[12px] text-forest-green">إنستا باي InstaPay</span>
+        <span class="bg-light-surface px-2.5 py-1 rounded border border-light-outline-variant font-bold text-[12px] text-forest-green">فودافون كاش Vodafone Cash</span>
+        <span class="bg-light-surface px-2.5 py-1 rounded border border-light-outline-variant font-bold text-[12px] text-forest-green">بطاقة ائتمانية / فيزا Visa</span>
+        <span class="bg-light-surface px-2.5 py-1 rounded border border-light-outline-variant font-bold text-[12px] text-forest-green">الدفع عند الاستلام</span>
       </div>
     </div>
   </footer>

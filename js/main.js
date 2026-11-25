@@ -13,6 +13,7 @@
     initMobileMenu();
     initSizingModal();
     initNavActiveState();
+    initWishlist(Store, Cart);
 
     // تحديد الصفحة الحالية وتشغيل منطقها
     const path = window.location.pathname.toLowerCase();
@@ -181,7 +182,7 @@
             <a href="products.html?cat=khimar" class="p-2.5 hover:bg-soft-sage/40 rounded text-light-on-surface">أطقم الخمار الفاخرة</a>
             <a href="products.html?cat=isdal" class="p-2.5 hover:bg-soft-sage/40 rounded text-light-on-surface">إسدالات الصلاة الواسعة</a>
             <a href="products.html?cat=niqab" class="p-2.5 hover:bg-soft-sage/40 rounded text-light-on-surface">تشكيلة النقابات الطبية</a>
-            <a href="index.html#coverage-fabric" class="p-2.5 hover:bg-soft-sage/40 rounded text-light-on-surface">دليل الأقمشة والعتامة</a>
+            <a href="fabrics.html" class="p-2.5 hover:bg-soft-sage/40 rounded text-light-on-surface">دليل الأقمشة والعتامة</a>
             <a href="cart.html" class="p-3 bg-soft-sage rounded text-forest-green font-bold flex items-center justify-between">
               <span>حقيبة الستر وإتمام الطلب</span>
               <span class="cart-badge-count bg-forest-green text-white text-xs px-2.5 py-0.5 rounded-full font-bold">2</span>
@@ -268,7 +269,7 @@
               <span class="material-symbols-outlined text-[16px]">table_chart</span>
               <span>فتح جدول المقاسات المفصل</span>
             </a>
-            <a href="https://wa.me/966500000000?text=السلام%20عليكم،%20أحتاج%20استشارة%20في%20اختيار%20طول%20العباءة" target="_blank" class="text-forest-green font-bold flex items-center gap-1 hover:underline">
+            <a href="https://wa.me/201092298237?text=السلام%20عليكم،%20أحتاج%20استشارة%20في%20اختيار%20طول%20العباءة" target="_blank" class="text-forest-green font-bold flex items-center gap-1 hover:underline">
               <span class="material-symbols-outlined text-[16px]">chat</span>
               <span>استشيري الخبيرة الشرعية</span>
             </a>
@@ -366,9 +367,9 @@
       if (priceContainer) {
         const diff = (product.originalPrice || product.price) - product.price;
         priceContainer.innerHTML = `
-          <span class="font-headline text-display-lg-mobile text-forest-green font-bold">${product.price} ر.س</span>
-          ${product.originalPrice ? `<span class="text-body-md text-light-outline line-through">${product.originalPrice} ر.س</span>` : ''}
-          ${diff > 0 ? `<span class="text-label-sm bg-champagne-gold/20 text-forest-green font-bold px-2 py-0.5 rounded">وفر ${diff} ر.س</span>` : ''}
+          <span class="font-headline text-display-lg-mobile text-forest-green font-bold">${product.price} ج.م</span>
+          ${product.originalPrice ? `<span class="text-body-md text-light-outline line-through">${product.originalPrice} ج.م</span>` : ''}
+          ${diff > 0 ? `<span class="text-label-sm bg-champagne-gold/20 text-forest-green font-bold px-2 py-0.5 rounded">وفر ${diff} ج.م</span>` : ''}
         `;
       }
 
@@ -468,13 +469,13 @@
       const niqabCb = document.querySelector('input[type="checkbox"][data-price="35"]');
       if (niqabCb && niqabCb.checked) {
         totalPerItem += 35;
-        selectedAddons.push('نقاب طبيعي مسامي (+35 ر.س)');
+        selectedAddons.push('نقاب طبيعي مسامي (+35 ج.م)');
       }
 
       const dressCb = document.querySelector('input[type="checkbox"][data-price="85"]');
       if (dressCb && dressCb.checked) {
         totalPerItem += 85;
-        selectedAddons.push('فستان كريب ساتر بلا أكمام (+85 ر.س)');
+        selectedAddons.push('فستان كريب ساتر بلا أكمام (+85 ج.م)');
       }
 
       const grand = totalPerItem * currentQty;
@@ -482,7 +483,7 @@
       if (addToCartBtn) {
         const span = addToCartBtn.querySelector('span:last-child');
         if (span) {
-          span.textContent = `إضافة الطقم المكتمل إلى الحقيبة (${grand} ر.س)`;
+          span.textContent = `إضافة الطقم المكتمل إلى الحقيبة (${grand} ج.م)`;
         }
       }
 
@@ -694,8 +695,10 @@
   function filterProductsByCategory(catKey, catInfo, articles, updateVisibleCount) {
     let matched = 0;
     articles.forEach(art => {
-      const text = art.innerHTML.toLowerCase();
-      const isMatch = catInfo.keywords.some(kw => text.includes(kw.toLowerCase()));
+      const explicitCat = art.getAttribute('data-cat');
+      const isMatch = explicitCat
+        ? explicitCat === catKey
+        : catInfo.keywords.some(kw => art.innerHTML.toLowerCase().includes(kw.toLowerCase()));
       art.style.display = isMatch ? 'flex' : 'none';
       if (isMatch) matched++;
     });
@@ -743,17 +746,45 @@
       });
     });
 
-    // تطبيق كود الخصم
-    const couponInput = document.querySelector('input[placeholder*="كود الخصم"]');
-    const couponContainer = couponInput ? couponInput.parentElement : null;
-    if (couponContainer) {
-      const couponBtn = couponContainer.querySelector('button');
-      couponBtn?.addEventListener('click', () => {
-        const code = couponInput?.value;
-        const res = Cart.applyCoupon(code);
-        showToast(res.message, '', res.success ? 'check_circle' : 'error', res.success ? 'success' : 'error');
-      });
+    // تطبيق كود الخصم أو رمز الإهداء
+    const couponInput = document.getElementById('coupon-code-input') || document.querySelector('input[placeholder*="كود الخصم"]');
+    const couponBtn = document.getElementById('apply-coupon-btn') || (couponInput ? couponInput.parentElement?.querySelector('button') : null);
+    const removeCouponBtn = document.getElementById('remove-coupon-btn');
+
+    function handleApplyCouponCode(codeToApply) {
+      if (couponInput && codeToApply) {
+        couponInput.value = codeToApply;
+      }
+      const code = codeToApply || couponInput?.value;
+      const res = Cart.applyCoupon(code);
+      showToast(res.message, '', res.success ? 'check_circle' : 'error', res.success ? 'success' : 'error');
+      if (res.success && window.WaqarFirebase && typeof window.WaqarFirebase.logEvent === 'function') {
+        window.WaqarFirebase.logEvent('select_promotion', { promotion_id: code?.trim().toUpperCase() });
+      }
     }
+
+    window.applyWaqarQuickCoupon = handleApplyCouponCode;
+
+    couponBtn?.addEventListener('click', () => handleApplyCouponCode());
+    couponInput?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        handleApplyCouponCode();
+      }
+    });
+
+    document.querySelectorAll('[data-quick-coupon]').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const code = chip.getAttribute('data-quick-coupon');
+        handleApplyCouponCode(code);
+      });
+    });
+
+    removeCouponBtn?.addEventListener('click', () => {
+      Cart.removeCoupon();
+      if (couponInput) couponInput.value = '';
+      showToast('تم إلغاء كود الخصم', '', 'info', 'info');
+    });
 
     // زر إرسال وتأكيد الطلب مع Firebase (محدد قياسي آمن)
     const confirmBtn = document.querySelector('button.confirm-order-btn') ||
@@ -813,7 +844,7 @@
                 </h3>
                 <p class="text-label-sm text-light-outline mt-0.5">${item.subtitle || ''}</p>
               </div>
-              <span class="font-headline text-headline-sm text-forest-green font-bold shrink-0">${item.price * item.quantity} ر.س</span>
+              <span class="font-headline text-headline-sm text-forest-green font-bold shrink-0">${item.price * item.quantity} ج.م</span>
             </div>
 
             <!-- شارات القياس والعتامة -->
@@ -875,24 +906,60 @@
     const summaryBox = document.querySelector('section.lg\\:col-span-5');
     if (!summaryBox) return;
 
-    const rows = summaryBox.querySelectorAll('.space-y-3.text-body-md > div');
+    const rows = summaryBox.querySelectorAll('.space-y-3.text-body-md > div:not(#summary-coupon-row)');
     if (rows.length >= 4) {
       rows[0].querySelector('span:first-child').innerHTML = `مجموع الأطقم (<span class="cart-badge-count">${totals.count}</span> قطع)`;
-      rows[0].querySelector('span:last-child').textContent = `${totals.subtotal} ر.س`;
-      rows[1].querySelector('span:last-child').textContent = totals.totalDiscount > 0 ? `-${totals.totalDiscount} ر.س` : '0 ر.س';
-      rows[2].querySelector('span:last-child').textContent = totals.shippingFee === 0 ? 'مـجـانـي (تجاوز 350 ر.س)' : `${totals.shippingFee} ر.س`;
-      rows[3].querySelector('span:last-child').textContent = `${totals.vat} ر.س`;
+      rows[0].querySelector('span:last-child').textContent = `${totals.subtotal} ج.م`;
+      rows[1].querySelector('span:last-child').textContent = totals.bundleDiscount > 0 ? `-${totals.bundleDiscount} ج.م` : '0 ج.م';
+      rows[2].querySelector('span:last-child').textContent = totals.shippingFee === 0 ? 'مـجـانـي (تجاوز 350 ج.م)' : `${totals.shippingFee} ج.م`;
+      rows[3].querySelector('span:last-child').textContent = `${totals.vat} ج.م`;
+    }
+
+    // تحديث صف كود الخصم / رمز الإهداء
+    const couponRow = document.getElementById('summary-coupon-row');
+    const couponLabel = document.getElementById('summary-coupon-label');
+    const couponAmount = document.getElementById('summary-coupon-amount');
+    const appliedBanner = document.getElementById('applied-coupon-banner');
+    const appliedText = document.getElementById('applied-coupon-text');
+    const couponInput = document.getElementById('coupon-code-input');
+
+    if (totals.coupon && totals.couponDiscount > 0) {
+      if (couponRow) {
+        couponRow.classList.remove('hidden');
+        couponRow.classList.add('flex');
+      }
+      if (couponLabel) couponLabel.textContent = totals.coupon.label || `كود الخصم (${totals.coupon.code})`;
+      if (couponAmount) couponAmount.textContent = `-${totals.couponDiscount} ج.م`;
+      if (appliedBanner) {
+        appliedBanner.classList.remove('hidden');
+        appliedBanner.classList.add('flex');
+      }
+      if (appliedText) {
+        appliedText.textContent = `مفعّل: ${totals.coupon.code} (وفّرتِ ${totals.couponDiscount} ج.م)`;
+      }
+      if (couponInput && !couponInput.value) {
+        couponInput.value = totals.coupon.code;
+      }
+    } else {
+      if (couponRow) {
+        couponRow.classList.add('hidden');
+        couponRow.classList.remove('flex');
+      }
+      if (appliedBanner) {
+        appliedBanner.classList.add('hidden');
+        appliedBanner.classList.remove('flex');
+      }
     }
 
     const finalPriceSpan = summaryBox.querySelector('.font-headline.text-display-lg-mobile');
     if (finalPriceSpan) {
-      finalPriceSpan.textContent = `${totals.finalTotal} ر.س`;
+      finalPriceSpan.textContent = `${totals.finalTotal} ج.م`;
     }
 
     const submitBtnSpan = summaryBox.querySelector('button.confirm-order-btn span:last-child') ||
                           summaryBox.querySelector('button.w-full span:last-child');
     if (submitBtnSpan) {
-      submitBtnSpan.textContent = `تأكيد الطلب وشحن الشحنة الساترة (${totals.finalTotal} ر.س)`;
+      submitBtnSpan.textContent = `تأكيد الطلب وشحن الشحنة الساترة (${totals.finalTotal} ج.م)`;
     }
   }
 
@@ -906,7 +973,7 @@
     const totals = Cart.calculateTotals();
 
     const packaging = document.querySelector('input[name="packaging"]:checked')?.closest('label')?.querySelector('.font-title')?.textContent?.trim() || 'صندوق وقار الكتوم السري';
-    const paymentMethod = document.querySelector('input[name="payment_method"]:checked')?.closest('label')?.querySelector('span.font-semibold')?.textContent?.trim() || 'مدى / Apple Pay';
+    const paymentMethod = document.querySelector('input[name="payment_method"]:checked')?.closest('label')?.querySelector('span.font-semibold')?.textContent?.trim() || 'مدى / فودافون كاش Vodafone Cash';
     const deliveryNote = document.querySelector('input[placeholder*="ملاحظة خاصة لمندوب التوصيل"]')?.value?.trim() || 'شحن كتوم هادئ';
 
     const orderData = {
@@ -979,7 +1046,7 @@
           </div>
           <div class="flex items-center justify-between">
             <span class="text-light-outline">المبلغ الإجمالي:</span>
-            <span class="font-bold text-forest-green">${orderData.finalTotal} ر.س</span>
+            <span class="font-bold text-forest-green">${orderData.finalTotal} ج.م</span>
           </div>
           <div class="flex items-center justify-between">
             <span class="text-light-outline">نوع التغليف المختار:</span>
@@ -1020,4 +1087,321 @@
       card.classList.add('product-card-hover');
     });
   }
+
+  /* ========================================================
+     نظام المفضلة وعلامة القلب التفاعلية (Wishlist System)
+     ======================================================== */
+  const WISHLIST_STORAGE_KEY = 'waqar_wishlist_v1';
+
+  function getWishlist() {
+    try {
+      const raw = localStorage.getItem(WISHLIST_STORAGE_KEY);
+      if (!raw) return ['royal-head-abaya-sakina'];
+      return JSON.parse(raw);
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function saveWishlist(list) {
+    try {
+      localStorage.setItem(WISHLIST_STORAGE_KEY, JSON.stringify(list));
+      updateWishlistUI();
+      window.dispatchEvent(new CustomEvent('waqar-wishlist-updated', { detail: { list } }));
+    } catch (e) {
+      console.error('Wishlist save error:', e);
+    }
+  }
+
+  function isFavorite(productId) {
+    return getWishlist().includes(productId);
+  }
+
+  function toggleWishlist(productId, Store) {
+    const list = getWishlist();
+    const idx = list.indexOf(productId);
+    const product = Store ? Store.getProductById(productId) : null;
+    const title = product ? (product.shortTitle || product.title) : 'القطعة المختارة';
+
+    if (idx > -1) {
+      list.splice(idx, 1);
+      saveWishlist(list);
+      showToast('تمت الإزالة من المفضلة', title, 'favorite_border', 'info');
+      return false;
+    } else {
+      list.push(productId);
+      saveWishlist(list);
+      showToast('تمت الإضافة إلى المفضلة بنجاح ❤️', title, 'favorite', 'success');
+      if (window.WaqarFirebase && typeof window.WaqarFirebase.logEvent === 'function') {
+        window.WaqarFirebase.logEvent('add_to_wishlist', {
+          item_id: productId,
+          item_name: title,
+          price: product ? product.price : 0,
+          currency: 'EGP'
+        });
+      }
+      return true;
+    }
+  }
+
+  function updateWishlistUI() {
+    const list = getWishlist();
+
+    // 1. تحديث أزرار القلب على بطاقات المنتجات وصفحة المنتج
+    const heartBtns = document.querySelectorAll('.waqar-heart-btn[data-product-id]');
+    heartBtns.forEach(btn => {
+      const pid = btn.getAttribute('data-product-id');
+      const fav = list.includes(pid);
+      btn.classList.toggle('is-favorite', fav);
+      btn.setAttribute('aria-pressed', fav ? 'true' : 'false');
+      const icon = btn.querySelector('.material-symbols-outlined');
+      if (icon) {
+        icon.textContent = fav ? 'favorite' : 'favorite_border';
+      }
+    });
+
+    // 2. تحديث أيقونة القلب وعداد المفضلة في الهيدر
+    const headerHeartLinks = document.querySelectorAll('header a[aria-label="المفضلة"], .header-wishlist-btn');
+    headerHeartLinks.forEach(link => {
+      link.classList.add('relative', 'waqar-heart-btn');
+      link.classList.toggle('is-favorite', list.length > 0);
+      const icon = link.querySelector('.material-symbols-outlined');
+      if (icon) {
+        icon.textContent = list.length > 0 ? 'favorite' : 'favorite_border';
+      }
+
+      let badge = link.querySelector('.wishlist-badge-count');
+      if (!badge) {
+        badge = document.createElement('span');
+        badge.className = 'wishlist-badge-count absolute -top-1 -left-1 w-5 h-5 rounded-full bg-rose-700 text-white text-[11px] flex items-center justify-center font-bold shadow';
+        link.appendChild(badge);
+      }
+      badge.textContent = list.length;
+      badge.classList.toggle('hidden', list.length === 0);
+    });
+  }
+
+  function initWishlist(Store, Cart) {
+    // 1. تفعيل زر القلب في الهيدر لفتح نافذة المفضلة بدلاً من الانتقال العشوائي
+    const headerHeartLinks = document.querySelectorAll('header a[aria-label="المفضلة"]');
+    headerHeartLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        openWishlistModal(Store, Cart);
+      });
+    });
+
+    // 2. إضافة زر القلب التفاعلي على جميع بطاقات المنتجات في كافة الصفحات
+    const productArticles = document.querySelectorAll('article');
+    productArticles.forEach(article => {
+      const detailLink = article.querySelector('a[href*="product-detail.html"]');
+      if (!detailLink) return;
+
+      const href = detailLink.getAttribute('href') || '';
+      const match = href.match(/[?&]id=([^&#]+)/);
+      const productId = match ? match[1] : 'royal-head-abaya-sakina';
+
+      const imgContainer = article.querySelector('.relative') || article.querySelector('div:first-child > div:first-child');
+      if (imgContainer && !imgContainer.querySelector('.waqar-heart-btn')) {
+        imgContainer.classList.add('relative');
+        const heartBtn = document.createElement('button');
+        heartBtn.type = 'button';
+        heartBtn.setAttribute('aria-label', 'إضافة إلى المفضلة');
+        heartBtn.setAttribute('data-product-id', productId);
+        heartBtn.className = 'waqar-heart-btn absolute top-3 left-3 z-10 w-9 h-9 rounded-full bg-light-surface/90 backdrop-blur-sm border border-light-outline-variant flex items-center justify-center text-forest-green hover:scale-110 shadow-sm cursor-pointer';
+        heartBtn.innerHTML = '<span class="material-symbols-outlined text-[20px]">favorite_border</span>';
+
+        heartBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          toggleWishlist(productId, Store);
+        });
+
+        imgContainer.appendChild(heartBtn);
+      }
+    });
+
+    // 3. إضافة زر القلب في صفحة تفاصيل المنتج (بجانب زر إضافة الطقم إلى الحقيبة)
+    const addToCartBtn = document.querySelector('.add-to-cart-action');
+    if (addToCartBtn && addToCartBtn.parentElement && !addToCartBtn.parentElement.querySelector('.pdp-heart-btn')) {
+      const urlParams = new URLSearchParams(window.location.search);
+      const currentProductId = urlParams.get('id') || 'royal-head-abaya-sakina';
+
+      const pdpHeartBtn = document.createElement('button');
+      pdpHeartBtn.type = 'button';
+      pdpHeartBtn.setAttribute('aria-label', 'حفظ في المفضلة');
+      pdpHeartBtn.setAttribute('data-product-id', currentProductId);
+      pdpHeartBtn.className = 'waqar-heart-btn pdp-heart-btn w-13 h-13 px-3.5 py-3.5 rounded border border-light-outline-variant bg-light-surface flex items-center justify-center text-forest-green hover:border-forest-green shadow-sm cursor-pointer';
+      pdpHeartBtn.innerHTML = '<span class="material-symbols-outlined text-[24px]">favorite_border</span>';
+
+      pdpHeartBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        toggleWishlist(currentProductId, Store);
+      });
+
+      addToCartBtn.parentElement.appendChild(pdpHeartBtn);
+    }
+
+    updateWishlistUI();
+  }
+
+  function openWishlistModal(Store, Cart) {
+    let modal = document.getElementById('waqar-wishlist-modal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'waqar-wishlist-modal';
+      modal.className = 'waqar-modal-overlay';
+      document.body.appendChild(modal);
+
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.classList.remove('active');
+      });
+    }
+
+    function renderModalContent() {
+      const list = getWishlist();
+      const favProducts = list
+        .map(id => (Store && typeof Store.getProductById === 'function' ? Store.getProductById(id) : null))
+        .filter(Boolean);
+
+      if (favProducts.length === 0) {
+        modal.innerHTML = `
+          <div class="waqar-modal-content p-6 space-y-5 text-right">
+            <div class="flex items-center justify-between pb-3 border-b border-light-outline-variant">
+              <div class="flex items-center gap-2 text-forest-green font-title text-title-lg font-bold">
+                <span class="material-symbols-outlined text-rose-700 text-[24px]">favorite</span>
+                <span>قائمة مفضلاتي الشرعية (0)</span>
+              </div>
+              <button type="button" class="close-wishlist p-1 text-light-outline hover:text-forest-green cursor-pointer">
+                <span class="material-symbols-outlined text-[24px]">close</span>
+              </button>
+            </div>
+            <div class="text-center py-10 space-y-3">
+              <span class="material-symbols-outlined text-[56px] text-light-outline">favorite_border</span>
+              <h4 class="font-title text-title-md text-forest-green font-bold">قائمة المفضلة فارغة حالياً</h4>
+              <p class="text-body-sm text-light-outline">اضغطي على علامة القلب أعلى أي عباءة أو خمار أو نقاب لحفظها هنا والرجوع إليها في أي وقت.</p>
+              <div class="pt-2">
+                <a href="products.html" class="inline-flex items-center gap-2 px-6 py-2.5 bg-forest-green text-white rounded-lg font-bold text-label-md hover:bg-forest-green/90">
+                  <span>تصفحي التشكيلة الشرعية</span>
+                  <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        `;
+      } else {
+        const itemsHtml = favProducts.map(prod => `
+          <div class="flex items-center gap-4 p-3 rounded-xl bg-light-surface border border-light-outline-variant hover:border-forest-green/40 transition-all">
+            <a href="product-detail.html?id=${prod.id}" class="w-16 h-20 rounded-lg overflow-hidden shrink-0 border border-light-outline-variant block">
+              <img src="${prod.image}" alt="${prod.title}" class="w-full h-full object-cover">
+            </a>
+            <div class="flex-1 min-w-0">
+              <a href="product-detail.html?id=${prod.id}" class="font-title text-title-md text-forest-green font-bold hover:underline block truncate">${prod.shortTitle || prod.title}</a>
+              <span class="text-label-xs text-light-outline block mt-0.5">${prod.fabric}</span>
+              <span class="font-headline text-headline-sm text-forest-green font-bold mt-1 block">${prod.price} ج.م</span>
+            </div>
+            <div class="flex flex-col gap-1.5 shrink-0">
+              <button type="button" class="fav-to-cart-btn px-3 py-1.5 bg-forest-green text-white rounded text-label-xs font-bold hover:bg-forest-green/90 flex items-center gap-1 cursor-pointer" data-id="${prod.id}">
+                <span class="material-symbols-outlined text-[15px]">shopping_bag</span>
+                <span>للحقيبة</span>
+              </button>
+              <button type="button" class="fav-remove-btn px-3 py-1 bg-rose-50 text-rose-700 border border-rose-200 rounded text-label-xs font-semibold hover:bg-rose-100 flex items-center justify-center gap-1 cursor-pointer" data-id="${prod.id}">
+                <span class="material-symbols-outlined text-[14px]">delete</span>
+                <span>إزالة</span>
+              </button>
+            </div>
+          </div>
+        `).join('');
+
+        modal.innerHTML = `
+          <div class="waqar-modal-content p-6 space-y-5 text-right">
+            <div class="flex items-center justify-between pb-3 border-b border-light-outline-variant">
+              <div class="flex items-center gap-2 text-forest-green font-title text-title-lg font-bold">
+                <span class="material-symbols-outlined text-rose-700 text-[24px]" style="font-variation-settings:'FILL' 1">favorite</span>
+                <span>قائمة مفضلاتي الشرعية (${favProducts.length})</span>
+              </div>
+              <button type="button" class="close-wishlist p-1 text-light-outline hover:text-forest-green cursor-pointer">
+                <span class="material-symbols-outlined text-[24px]">close</span>
+              </button>
+            </div>
+
+            <div class="space-y-3 max-h-[55vh] overflow-y-auto pr-1">
+              ${itemsHtml}
+            </div>
+
+            <div class="pt-3 border-t border-light-outline-variant flex flex-col sm:flex-row items-center justify-between gap-3">
+              <button type="button" id="add-all-favs-btn" class="w-full sm:flex-1 py-2.5 px-4 bg-forest-green text-white font-bold rounded-lg hover:bg-forest-green/90 transition-colors flex items-center justify-center gap-2 cursor-pointer">
+                <span class="material-symbols-outlined text-[18px]">shopping_bag</span>
+                <span>نقل كافة المفضلة إلى الحقيبة</span>
+              </button>
+              <a href="cart.html" class="w-full sm:w-auto py-2.5 px-4 bg-soft-sage text-forest-green font-bold rounded-lg hover:bg-forest-green hover:text-white transition-colors text-center">
+                عرض الحقيبة
+              </a>
+            </div>
+          </div>
+        `;
+      }
+
+      modal.querySelector('.close-wishlist')?.addEventListener('click', () => modal.classList.remove('active'));
+
+      modal.querySelectorAll('.fav-remove-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const pid = btn.getAttribute('data-id');
+          toggleWishlist(pid, Store);
+          renderModalContent();
+        });
+      });
+
+      modal.querySelectorAll('.fav-to-cart-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const pid = btn.getAttribute('data-id');
+          const prod = Store.getProductById(pid);
+          if (prod && Cart) {
+            Cart.addToCart({
+              id: prod.id,
+              title: prod.shortTitle || prod.title,
+              subtitle: `${prod.fabric} (${prod.gsm})`,
+              price: prod.price,
+              size: prod.availableSizes?.[0] ? `${prod.availableSizes[0].size} (${prod.availableSizes[0].heightRange})` : 'مقاس قياسي',
+              addons: [],
+              quantity: 1,
+              image: prod.image,
+              opacityGuarantee: prod.opacity
+            });
+            showToast('تم النقل إلى حقيبة الستر!', prod.shortTitle || prod.title, 'shopping_bag', 'success');
+          }
+        });
+      });
+
+      modal.querySelector('#add-all-favs-btn')?.addEventListener('click', () => {
+        if (!Cart) return;
+        favProducts.forEach(prod => {
+          Cart.addToCart({
+            id: prod.id,
+            title: prod.shortTitle || prod.title,
+            subtitle: `${prod.fabric} (${prod.gsm})`,
+            price: prod.price,
+            size: prod.availableSizes?.[0] ? `${prod.availableSizes[0].size} (${prod.availableSizes[0].heightRange})` : 'مقاس قياسي',
+            addons: [],
+            quantity: 1,
+            image: prod.image,
+            opacityGuarantee: prod.opacity
+          });
+        });
+        showToast('تمت إضافة جميع المفضلات إلى الحقيبة!', `${favProducts.length} قطع شرعية`, 'shopping_bag', 'success');
+        modal.classList.remove('active');
+      });
+    }
+
+    renderModalContent();
+    modal.classList.add('active');
+  }
+
+  window.WaqarWishlist = {
+    getWishlist,
+    toggleWishlist: (id) => toggleWishlist(id, window.WaqarStore),
+    isFavorite,
+    openModal: () => openWishlistModal(window.WaqarStore, window.WaqarCart)
+  };
+  window.openWaqarWishlistModal = () => openWishlistModal(window.WaqarStore, window.WaqarCart);
 })();

@@ -150,6 +150,35 @@
   background-color: rgba(226, 232, 223, 0.5) !important;
 }
 
+/* Wishlist Heart Icon & Animation */
+@keyframes heartPop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.35); }
+  70% { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+.waqar-heart-btn {
+  transition: all 0.2s ease;
+}
+
+.waqar-heart-btn .material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.waqar-heart-btn.is-favorite {
+  border-color: rgba(190, 18, 60, 0.35) !important;
+  background-color: #fff1f2 !important;
+  color: #be123c !important;
+}
+
+.waqar-heart-btn.is-favorite .material-symbols-outlined {
+  font-variation-settings: 'FILL' 1, 'wght' 600, 'GRAD' 0, 'opsz' 24;
+  color: #be123c !important;
+  animation: heartPop 0.38s cubic-bezier(0.2, 0, 0, 1);
+}
+
 /* Print Stylesheet for Discreet Invoice */
 @media print {
   header, footer, aside, button, .no-print {
